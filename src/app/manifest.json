@@ -1,0 +1,41 @@
+{
+    "name": "UVlab - 紫外線ケアガイド",
+    "short_name": "UVlab",
+    "description": "今日のUV指数と日焼け止め診断・事後ケアガイド",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0f6e56",
+    "orientation": "portrait-primary",
+    "lang": "ja",
+    "categories": ["health", "lifestyle"],
+    "icons": [
+      {
+        "src": "/icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/icons/icon-512.png",
+        "sizes": "512x512",
+        "type": "image/png",
+        "purpose": "maskable"
+      },
+      {
+        "src": "/icons/icon-192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any"
+      }
+    ],
+    "screenshots": [
+      {
+        "src": "/screenshots/home.png",
+        "sizes": "390x844",
+        "type": "image/png",
+        "form_factor": "narrow",
+        "label": "UVlabホーム画面"
+      }
+    ]
+  }

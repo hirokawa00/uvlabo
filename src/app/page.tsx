@@ -4,6 +4,7 @@ import { useState } from "react"
 import { UVCard } from "@/components/UVCard"
 import { DiagnosisContainer } from "@/components/diagnosis/DiagnosisContainer"
 import { AfterCareContainer } from "@/components/aftercare/AfterCareContainer"
+import { Footer } from "@/components/Footer"
 
 type Tab = "uv" | "diagnosis" | "aftercare"
 
@@ -18,7 +19,7 @@ export default function HomePage() {
   const [currentUV, setCurrentUV] = useState<number | undefined>(undefined)
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <header className="sticky top-0 z-20 bg-background/90 backdrop-blur border-b border-border">
         <div className="max-w-lg mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-1.5">
@@ -53,7 +54,7 @@ export default function HomePage() {
         </div>
       </header>
 
-      <main className="max-w-lg mx-auto px-4 py-5">
+      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-5">
         {activeTab === "uv" && (
           <div className="space-y-4">
             <UVCard spf={50} onUVLoaded={(uv) => setCurrentUV(uv)} />
@@ -76,6 +77,8 @@ export default function HomePage() {
         {activeTab === "diagnosis" && <DiagnosisContainer uvIndex={currentUV} />}
         {activeTab === "aftercare" && <AfterCareContainer />}
       </main>
+
+      <Footer />
     </div>
   )
 }
