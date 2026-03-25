@@ -175,7 +175,7 @@ export const PRODUCTS: Product[] = [
     brand: "KISO",
     price: 2750,
     spf: 0, // SPFなし（事後ケア製品）
-    pa: "",
+    pa: "+",
     tags: ["敏感肌向け", "しっとり"],
     description: "楽天1位の美白ケア。日焼け後の集中ケアに",
     emoji: "🔬",
