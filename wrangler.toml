@@ -1,4 +1,4 @@
-name = "uvlab"
+name = "uvlabo"
 main = ".open-next/worker.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
@@ -10,7 +10,7 @@ binding = "ASSETS"
 
 # ── 環境変数 ──────────────────────────────────────────────────────
 [vars]
-NEXT_PUBLIC_BASE_URL = "https://uvlab.jp"
+NEXT_PUBLIC_BASE_URL = "https://uvlabo.jp"
 
 # ── KV（キャッシュ用・将来拡張）─────────────────────────────────
 # [[kv_namespaces]]
