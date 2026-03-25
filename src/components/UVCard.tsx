@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { useUVData, uvIndexToColor, uvIndexToBarWidth } from "@/hooks/useUVData"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -9,10 +10,17 @@ import { RefreshCw, MapPin, AlertTriangle } from "lucide-react"
 
 type Props = {
   spf?: number
+  onUVLoaded?: (uvIndex: number) => void
 }
 
-export function UVCard({ spf = 50 }: Props) {
+export function UVCard({ spf = 50, onUVLoaded }: Props) {
   const { state, refresh } = useUVData(spf)
+
+  useEffect(() => {
+    if (state.status === "success" && onUVLoaded) {
+      onUVLoaded(state.data.currentUV)
+    }
+  }, [state, onUVLoaded])
 
   // ── ローディング状態 ───────────────────────────────────────────
   if (state.status === "idle" || state.status === "locating") {
