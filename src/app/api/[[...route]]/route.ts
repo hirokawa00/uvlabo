@@ -39,7 +39,7 @@ app.get(
     try {
       const res = await fetch(jmaUrl, {
         headers: {
-          "User-Agent": "UVlab/1.0 (personal weather app)",
+          "User-Agent": "UVlabo/1.0 (personal weather app)",
           "Cache-Control": "max-age=3600",
         },
       })

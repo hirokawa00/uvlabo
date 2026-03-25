@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /api/
 
-Sitemap: https://uvlab.jp/sitemap.xml
+Sitemap: https://uvlabo.com/sitemap.xml

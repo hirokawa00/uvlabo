@@ -15,4 +15,4 @@ service = "uvlabo"
 
 # 環境変数
 [vars]
-NEXT_PUBLIC_BASE_URL = "https://uvlabo.jp"
+NEXT_PUBLIC_BASE_URL = "https://uvlabo.com"

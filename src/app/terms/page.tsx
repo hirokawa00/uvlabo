@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "利用規約",
-  description: "UVlabの利用規約です。",
+  description: "UVlaboの利用規約です。",
   robots: { index: true, follow: false },
 }
 

@@ -3,7 +3,7 @@ import Link from "next/link"
 
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
-  description: "UVlabのプライバシーポリシーです。位置情報の取得・利用方法についてご確認ください。",
+  description: "UVlaboのプライバシーポリシーです。位置情報の取得・利用方法についてご確認ください。",
   robots: { index: true, follow: false },
 }
 
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-base font-medium mb-3">1. はじめに</h2>
             <p className="text-muted-foreground">
-              UVlab（以下「当サービス」）は、ユーザーのプライバシーを尊重し、
+              UVlabo（以下「当サービス」）は、ユーザーのプライバシーを尊重し、
               個人情報の保護に努めます。本ポリシーは、当サービスが収集・利用する
               情報の種類と目的を説明します。
             </p>

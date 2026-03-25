@@ -41,10 +41,13 @@ export function Footer() {
           <Link href="/legal" className="hover:text-foreground transition-colors">
             特定商取引法に基づく表記
           </Link>
+          <Link href="/contact" className="hover:text-foreground transition-colors">
+            お問い合わせ
+          </Link>
         </div>
 
         <p className="text-[11px] text-muted-foreground">
-          © {currentYear} UVlab. All rights reserved.
+          © {currentYear} UVlabo. All rights reserved.
         </p>
       </div>
     </footer>

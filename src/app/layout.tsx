@@ -9,13 +9,13 @@ const notoSansJP = Noto_Sans_JP({
   variable: "--font-noto",
 })
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlab.jp"
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com"
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "UVlab | 紫外線ケアガイド・日焼け止め診断",
-    template: "%s | UVlab",
+    default: "UVlabo | 紫外線ケアガイド・日焼け止め診断",
+    template: "%s | UVlabo",
   },
   description:
     "今日のUV指数を確認して、肌タイプ・シーン・予算に合った日焼け止めを診断。日焼けしてしまったときの事後ケア手順も分かる紫外線ケア特化サービスです。",
@@ -23,14 +23,14 @@ export const metadata: Metadata = {
     "紫外線", "UV指数", "日焼け止め", "日焼け止め診断", "SPF", "PA",
     "日焼けケア", "事後ケア", "シミ予防", "美白", "敏感肌",
   ],
-  authors: [{ name: "UVlab" }],
-  creator: "UVlab",
+  authors: [{ name: "UVlabo" }],
+  creator: "UVlabo",
   openGraph: {
     type: "website",
     locale: "ja_JP",
     url: BASE_URL,
-    siteName: "UVlab",
-    title: "UVlab | 紫外線ケアガイド・日焼け止め診断",
+    siteName: "UVlabo",
+    title: "UVlabo | 紫外線ケアガイド・日焼け止め診断",
     description:
       "今日のUV指数を確認して、肌タイプ別に最適な日焼け止めを診断。日焼けあとのケア手順も分かります。",
     images: [
@@ -38,17 +38,17 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "UVlab - 紫外線ケアガイド",
+        alt: "UVlabo - 紫外線ケアガイド",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "UVlab | 紫外線ケアガイド・日焼け止め診断",
+    title: "UVlabo | 紫外線ケアガイド・日焼け止め診断",
     description:
       "今日のUV指数を確認して、肌タイプ別に最適な日焼け止めを診断。日焼けあとのケア手順も分かります。",
     images: ["/opengraph-image.png"],
-    creator: "@uvlab_jp",
+    creator: "@UVlabo_com",
   },
   robots: {
     index: true,
