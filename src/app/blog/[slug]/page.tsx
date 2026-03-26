@@ -175,6 +175,15 @@ export default async function BlogPostPage({ params }: Props) {
                 prose-a:text-emerald-700 prose-a:no-underline hover:prose-a:underline
                 prose-blockquote:border-l-emerald-300 prose-blockquote:py-1
                 prose-img:rounded-2xl
+
+                [&_h2]:scroll-mt-24
+                [&_h3]:scroll-mt-24
+                [&_.anchor-link]:ml-2
+                [&_.anchor-link]:opacity-0
+                [&_.anchor-link]:text-muted-foreground
+                [&_.anchor-link]:transition-opacity
+                [&_h2:hover_.anchor-link]:opacity-100
+                [&_h3:hover_.anchor-link]:opacity-100
               "
             >
               <PostContent />
@@ -219,7 +228,7 @@ export default async function BlogPostPage({ params }: Props) {
 
           {/* ── サイドバー（PC） ─────────────────────────── */}
           <aside className="w-72 shrink-0 hidden lg:block">
-            <div className="space-y-6">
+            <div className="sticky top-22 space-y-6">
               <AutoTableOfContents articleId="article-body" />
               <SidebarToolCTA />
             </div>

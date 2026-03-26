@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types"
 import Link from "next/link"
+import { cn } from "@/lib/utils"
 
 // ── アフィリエイトリンクコンポーネント ───────────────────────────
 type ProductCardProps = {
@@ -141,53 +142,117 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     CheckItem,
     ToolCTA,
 
-    h2: ({ children }) => (
-      <h2 className="text-xl font-bold text-gray-900 mt-12 mb-4 pb-3 border-b-2 border-emerald-200 flex items-center gap-2">
+    h2: ({ className, children, id, ...props }) => (
+      <h2
+        id={id}
+        className={cn(
+          "text-xl font-bold text-gray-900 mt-12 mb-4 pb-3 border-b-2 border-emerald-200 flex items-center gap-2 scroll-mt-24 group",
+          className
+        )}
+        {...props}
+      >
         {children}
+        {id && (
+          <a
+            href={`#${id}`}
+            className="ml-2 text-sm text-muted-foreground no-underline opacity-0 transition-opacity group-hover:opacity-100"
+            aria-label="見出しへのリンク"
+          >
+            #
+          </a>
+        )}
       </h2>
     ),
 
-    h3: ({ children }) => (
-      <h3 className="text-base font-bold text-gray-900 mt-8 mb-3 pl-3 border-l-3 border-emerald-400">
+    h3: ({ className, children, id, ...props }) => (
+      <h3
+        id={id}
+        className={cn(
+          "text-base font-bold text-gray-900 mt-8 mb-3 pl-3 border-l-[3px] border-emerald-400 scroll-mt-24 group",
+          className
+        )}
+        {...props}
+      >
         {children}
+        {id && (
+          <a
+            href={`#${id}`}
+            className="ml-2 text-sm text-muted-foreground no-underline opacity-0 transition-opacity group-hover:opacity-100"
+            aria-label="見出しへのリンク"
+          >
+            #
+          </a>
+        )}
       </h3>
     ),
 
-    strong: ({ children }) => (
-      <strong className="font-bold text-emerald-800">{children}</strong>
+    strong: ({ className, children, ...props }) => (
+      <strong
+        className={cn("font-bold text-emerald-800", className)}
+        {...props}
+      >
+        {children}
+      </strong>
     ),
 
-    a: ({ href, children }) => (
+    a: ({ href, className, children, ...props }) => (
       <a
         href={href}
-        className="text-emerald-700 underline underline-offset-2 hover:text-emerald-800 transition-colors"
+        className={cn(
+          "text-emerald-700 underline underline-offset-2 hover:text-emerald-800 transition-colors",
+          className
+        )}
         target={href?.startsWith("http") ? "_blank" : undefined}
         rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+        {...props}
       >
         {children}
       </a>
     ),
 
-    blockquote: ({ children }) => (
-      <blockquote className="my-6 pl-4 border-l-4 border-emerald-300 bg-emerald-50/50 py-3 pr-4 rounded-r-xl text-gray-700 text-sm leading-relaxed italic">
+    blockquote: ({ className, children, ...props }) => (
+      <blockquote
+        className={cn(
+          "my-6 pl-4 border-l-4 border-emerald-300 bg-emerald-50/50 py-3 pr-4 rounded-r-xl text-gray-700 text-sm leading-relaxed italic",
+          className
+        )}
+        {...props}
+      >
         {children}
       </blockquote>
     ),
 
-    table: ({ children }) => (
+    table: ({ className, children, ...props }) => (
       <div className="overflow-x-auto my-6">
-        <table className="w-full text-sm border-collapse">{children}</table>
+        <table className={cn("w-full text-sm border-collapse", className)} {...props}>
+          {children}
+        </table>
       </div>
     ),
-    th: ({ children }) => (
-      <th className="px-3 py-2.5 bg-emerald-700 text-white font-medium text-left text-xs">{children}</th>
-    ),
-    td: ({ children }) => (
-      <td className="px-3 py-2.5 border-b border-gray-100 text-gray-700">{children}</td>
+
+    th: ({ className, children, ...props }) => (
+      <th
+        className={cn("px-3 py-2.5 bg-emerald-700 text-white font-medium text-left text-xs", className)}
+        {...props}
+      >
+        {children}
+      </th>
     ),
 
-    code: ({ children }) => (
-      <code className="px-1.5 py-0.5 rounded bg-gray-100 text-emerald-700 text-[13px] font-mono">
+    td: ({ className, children, ...props }) => (
+      <td
+        className={cn("px-3 py-2.5 border-b border-gray-100 text-gray-700", className)}
+        {...props}
+      >
+        {children}
+      </td>
+    ),
+
+    code: ({ className, children, ...props }) => (
+      <code
+        className={cn("px-1.5 py-0.5 rounded bg-gray-100 text-emerald-700 text-[13px] font-mono", className)}
+        {...props}
+      >
         {children}
       </code>
     ),
