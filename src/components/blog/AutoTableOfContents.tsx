@@ -18,7 +18,7 @@ export function AutoTableOfContents({ articleId }: Props) {
     const article = document.getElementById(articleId)
     if (!article) return
 
-    const headings = article.querySelectorAll("h2[id], h3[id]")
+    const headings = article.querySelectorAll("h2[id]")
     const toc: TocItem[] = Array.from(headings).map((el) => ({
       id: el.id,
       text: el.textContent?.replace(/^#/, "").trim() ?? "",
