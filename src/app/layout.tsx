@@ -4,9 +4,11 @@ import "./globals.css"
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-  weight: ["400", "500", "700"],
+  weight: ["400", "500"],     // 700を削除（約30%削減）
   display: "swap",
   variable: "--font-noto",
+  adjustFontFallback: true,   // フォールバックのメトリクスを近似 → CLS改善
+  preload: false,             // 日本語フォントは巨大なため先読み不要
 })
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com"
@@ -84,9 +86,10 @@ export default function RootLayout({
   return (
     <html lang="ja" className={notoSansJP.variable}>
       <head>
+        {/* DNSプリフェッチ追加 */}
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
         {/* PWA マニフェスト */}
         <link rel="manifest" href="/manifest.json" />
-        {/* ファビコン */}
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />

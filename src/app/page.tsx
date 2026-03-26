@@ -1,13 +1,47 @@
 "use client"
 
 import { useState } from "react"
+import dynamic from "next/dynamic"
 import Link from "next/link"
 import { UVCard } from "@/components/UVCard"
-import { DiagnosisContainer } from "@/components/diagnosis/DiagnosisContainer"
-import { AfterCareContainer } from "@/components/aftercare/AfterCareContainer"
 import { Footer } from "@/components/Footer"
 import { BLOG_POSTS, CATEGORY_CONFIG, formatDate } from "@/lib/blog"
 import { Clock, ChevronRight, BookOpen } from "lucide-react"
+
+// ── タブコンテンツを遅延読み込み（初期バンドルから除外）──────────
+const DiagnosisContainer = dynamic(
+  () =>
+    import("@/components/diagnosis/DiagnosisContainer").then((m) => ({
+      default: m.DiagnosisContainer,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="space-y-4">
+        <div className="h-16 rounded-xl bg-secondary animate-pulse" />
+        <div className="h-10 rounded-xl bg-secondary animate-pulse" />
+        <div className="h-10 rounded-xl bg-secondary animate-pulse" />
+        <div className="h-10 rounded-xl bg-secondary animate-pulse" />
+      </div>
+    ),
+  }
+)
+
+const AfterCareContainer = dynamic(
+  () =>
+    import("@/components/aftercare/AfterCareContainer").then((m) => ({
+      default: m.AfterCareContainer,
+    })),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="space-y-4">
+        <div className="h-20 rounded-xl bg-secondary animate-pulse" />
+        <div className="h-12 rounded-xl bg-secondary animate-pulse" />
+      </div>
+    ),
+  }
+)
 
 type Tab = "uv" | "diagnosis" | "aftercare"
 
@@ -17,7 +51,6 @@ const TABS: { key: Tab; label: string; emoji: string }[] = [
   { key: "aftercare", label: "事後ケア",      emoji: "🌊" },
 ]
 
-// トップに表示する記事（最新3件）
 const PICKUP_POSTS = BLOG_POSTS.slice(0, 3)
 
 export default function HomePage() {
@@ -36,7 +69,6 @@ export default function HomePage() {
               UV<span className="text-emerald-700">lab</span>o
             </span>
           </div>
-          {/* コラムへのリンク */}
           <Link
             href="/blog"
             className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -112,7 +144,7 @@ export default function HomePage() {
               </div>
 
               <div className="space-y-2.5">
-                {PICKUP_POSTS.map((post, i) => {
+                {PICKUP_POSTS.map((post) => {
                   const cfg = CATEGORY_CONFIG[post.category]
                   return (
                     <Link
@@ -120,34 +152,27 @@ export default function HomePage() {
                       href={`/blog/${post.slug}`}
                       className="flex items-center gap-3 p-3.5 rounded-xl border border-border hover:border-emerald-300 hover:bg-emerald-50/30 transition-all group"
                     >
-                      {/* カバー絵文字 */}
                       <div className={`w-12 h-12 rounded-xl bg-linear-to-br ${post.coverColor} flex items-center justify-center text-xl shrink-0`}>
                         {post.coverEmoji}
                       </div>
-
                       <div className="flex-1 min-w-0">
-                        {/* カテゴリ */}
                         <span className={`text-[10px] px-1.5 py-0.5 rounded font-medium ${cfg.color} ${cfg.textColor} inline-block mb-0.5`}>
                           {cfg.label}
                         </span>
-                        {/* タイトル */}
                         <p className="text-sm font-medium text-foreground group-hover:text-emerald-700 transition-colors line-clamp-2 leading-snug">
                           {post.title}
                         </p>
-                        {/* 読了時間 */}
                         <p className="text-[11px] text-muted-foreground mt-0.5 flex items-center gap-1">
                           <Clock className="w-2.5 h-2.5" />
                           {post.readingTimeMin}分で読める
                         </p>
                       </div>
-
                       <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
                     </Link>
                   )
                 })}
               </div>
 
-              {/* コラム一覧へのCTA */}
               <Link
                 href="/blog"
                 className="mt-3 flex items-center justify-center gap-1.5 w-full py-3 rounded-xl border border-border text-sm text-muted-foreground hover:bg-secondary transition-colors"
