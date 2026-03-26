@@ -13,9 +13,6 @@ const withMDX = createMDX({
 
 const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
-  experimental: {
-    optimizeCss: true,    // クリティカルCSSをインライン化 → レンダリングブロック解消
-  },
   compiler: {
     removeConsole: process.env.NODE_ENV === "production",  // console.log除去
   },
