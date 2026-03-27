@@ -49,6 +49,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.4.9",
     "@cloudflare/workers-types": "^4.20260317.1",
     "@opennextjs/cloudflare": "^1.17.3",
     "@tailwindcss/postcss": "^4",
@@ -57,8 +58,6 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "^4.77.0"
