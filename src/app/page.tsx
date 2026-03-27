@@ -1,6 +1,6 @@
-import { Footer } from "@/components/Footer"
-import { HomeTabsClient } from "@/components/home/HomeTabsClient"
-import { BlogPickupSection } from "@/components/home/BlogPickupSection"
+import { Footer } from "@/components/Footer";
+import { BlogPickupSection } from "@/components/home/BlogPickupSection";
+import { HomeTabsClient } from "@/components/home/HomeTabsClient";
 
 export default function HomePage() {
   return (
@@ -12,5 +12,5 @@ export default function HomePage() {
 
       <Footer />
     </div>
-  )
+  );
 }

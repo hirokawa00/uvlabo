@@ -1,4 +1,4 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export default function NotFound() {
   return (
@@ -7,7 +7,8 @@ export default function NotFound() {
         <p className="text-6xl mb-6">☀️</p>
         <h1 className="text-2xl font-medium mb-2">ページが見つかりません</h1>
         <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
-          お探しのページは移動・削除されたか、<br />
+          お探しのページは移動・削除されたか、
+          <br />
           URLが間違っている可能性があります。
         </p>
         <Link
@@ -18,5 +19,5 @@ export default function NotFound() {
         </Link>
       </div>
     </div>
-  )
+  );
 }

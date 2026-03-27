@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
 import type {
-  SkinType,
-  UseScene,
-  MakeupStyle,
   BudgetRange,
-  TexturePreference,
   DiagnosisStep,
-} from "@/lib/diagnosis/types"
-import { TOTAL_STEPS } from "@/lib/diagnosis/types"
+  MakeupStyle,
+  SkinType,
+  TexturePreference,
+  UseScene,
+} from "@/lib/diagnosis/types";
+import { TOTAL_STEPS } from "@/lib/diagnosis/types";
+import { cn } from "@/lib/utils";
 
 // ─── ステップバー ────────────────────────────────────────────────
 
@@ -23,23 +23,23 @@ export function StepBar({ current }: { current: DiagnosisStep }) {
             "flex-1 h-1 rounded-full transition-all duration-300",
             n < current && "bg-emerald-500",
             n === current && "bg-emerald-700",
-            n > current && "bg-secondary"
+            n > current && "bg-secondary",
           )}
         />
       ))}
     </div>
-  )
+  );
 }
 
 // ─── 選択カード（共通）──────────────────────────────────────────
 
 type ChoiceCardProps = {
-  emoji: string
-  label: string
-  description?: string
-  selected: boolean
-  onClick: () => void
-}
+  emoji: string;
+  label: string;
+  description?: string;
+  selected: boolean;
+  onClick: () => void;
+};
 
 export function ChoiceCard({
   emoji,
@@ -58,14 +58,14 @@ export function ChoiceCard({
         "hover:border-emerald-400 hover:bg-emerald-50/60",
         selected
           ? "border-emerald-600 bg-emerald-50 ring-1 ring-emerald-600"
-          : "border-border bg-card"
+          : "border-border bg-card",
       )}
     >
       <span className="text-2xl leading-none">{emoji}</span>
       <span
         className={cn(
           "text-sm font-medium leading-tight",
-          selected ? "text-emerald-800" : "text-foreground"
+          selected ? "text-emerald-800" : "text-foreground",
         )}
       >
         {label}
@@ -76,15 +76,15 @@ export function ChoiceCard({
         </span>
       )}
     </button>
-  )
+  );
 }
 
 // ─── 問いヘッダー ────────────────────────────────────────────────
 
 type QuestionHeaderProps = {
-  step: DiagnosisStep
-  title: string
-}
+  step: DiagnosisStep;
+  title: string;
+};
 
 export function QuestionHeader({ step, title }: QuestionHeaderProps) {
   return (
@@ -96,17 +96,17 @@ export function QuestionHeader({ step, title }: QuestionHeaderProps) {
         {title}
       </h2>
     </div>
-  )
+  );
 }
 
 // ─── ナビゲーションボタン ────────────────────────────────────────
 
 type NavRowProps = {
-  onBack?: () => void
-  onNext: () => void
-  nextLabel?: string
-  disabled?: boolean
-}
+  onBack?: () => void;
+  onNext: () => void;
+  nextLabel?: string;
+  disabled?: boolean;
+};
 
 export function NavRow({
   onBack,
@@ -133,30 +133,60 @@ export function NavRow({
           "flex-1 py-3 rounded-xl text-sm font-medium transition-all",
           disabled
             ? "bg-secondary text-muted-foreground cursor-not-allowed"
-            : "bg-emerald-700 text-white hover:bg-emerald-800 active:scale-[0.98]"
+            : "bg-emerald-700 text-white hover:bg-emerald-800 active:scale-[0.98]",
         )}
       >
         {nextLabel}
       </button>
     </div>
-  )
+  );
 }
 
 // ─── Step1: 肌タイプ ─────────────────────────────────────────────
 
 type Step1Props = {
-  value: SkinType | null
-  onChange: (v: SkinType) => void
-  onNext: () => void
-}
+  value: SkinType | null;
+  onChange: (v: SkinType) => void;
+  onNext: () => void;
+};
 
-const SKIN_OPTIONS: { value: SkinType; emoji: string; label: string; desc: string }[] = [
-  { value: "dry", emoji: "💧", label: "乾燥肌", desc: "つっぱり・粉ふきが気になる" },
-  { value: "oily", emoji: "✨", label: "脂性肌", desc: "テカリ・毛穴が気になる" },
-  { value: "combination", emoji: "🌿", label: "混合肌", desc: "Tゾーンはテカリ、頬は乾燥" },
-  { value: "sensitive", emoji: "🌸", label: "敏感肌", desc: "刺激に弱く赤みが出やすい" },
-  { value: "normal", emoji: "😊", label: "普通肌", desc: "特に気になる症状がない" },
-]
+const SKIN_OPTIONS: {
+  value: SkinType;
+  emoji: string;
+  label: string;
+  desc: string;
+}[] = [
+  {
+    value: "dry",
+    emoji: "💧",
+    label: "乾燥肌",
+    desc: "つっぱり・粉ふきが気になる",
+  },
+  {
+    value: "oily",
+    emoji: "✨",
+    label: "脂性肌",
+    desc: "テカリ・毛穴が気になる",
+  },
+  {
+    value: "combination",
+    emoji: "🌿",
+    label: "混合肌",
+    desc: "Tゾーンはテカリ、頬は乾燥",
+  },
+  {
+    value: "sensitive",
+    emoji: "🌸",
+    label: "敏感肌",
+    desc: "刺激に弱く赤みが出やすい",
+  },
+  {
+    value: "normal",
+    emoji: "😊",
+    label: "普通肌",
+    desc: "特に気になる症状がない",
+  },
+];
 
 export function Step1({ value, onChange, onNext }: Step1Props) {
   return (
@@ -176,24 +206,44 @@ export function Step1({ value, onChange, onNext }: Step1Props) {
       </div>
       <NavRow onNext={onNext} disabled={!value} />
     </>
-  )
+  );
 }
 
 // ─── Step2: シーン ───────────────────────────────────────────────
 
 type Step2Props = {
-  value: UseScene | null
-  onChange: (v: UseScene) => void
-  onNext: () => void
-  onBack: () => void
-}
+  value: UseScene | null;
+  onChange: (v: UseScene) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
 
-const SCENE_OPTIONS: { value: UseScene; emoji: string; label: string; desc: string }[] = [
-  { value: "commute", emoji: "🚃", label: "通勤・通学", desc: "外出は移動メイン" },
-  { value: "outing", emoji: "🛍️", label: "お出かけ", desc: "買い物・街歩きなど" },
-  { value: "outdoor", emoji: "⛅", label: "アウトドア", desc: "スポーツ・公園・海" },
+const SCENE_OPTIONS: {
+  value: UseScene;
+  emoji: string;
+  label: string;
+  desc: string;
+}[] = [
+  {
+    value: "commute",
+    emoji: "🚃",
+    label: "通勤・通学",
+    desc: "外出は移動メイン",
+  },
+  {
+    value: "outing",
+    emoji: "🛍️",
+    label: "お出かけ",
+    desc: "買い物・街歩きなど",
+  },
+  {
+    value: "outdoor",
+    emoji: "⛅",
+    label: "アウトドア",
+    desc: "スポーツ・公園・海",
+  },
   { value: "indoor", emoji: "🏠", label: "在宅・室内", desc: "ほぼ外出しない" },
-]
+];
 
 export function Step2({ value, onChange, onNext, onBack }: Step2Props) {
   return (
@@ -213,17 +263,17 @@ export function Step2({ value, onChange, onNext, onBack }: Step2Props) {
       </div>
       <NavRow onBack={onBack} onNext={onNext} disabled={!value} />
     </>
-  )
+  );
 }
 
 // ─── Step3: メイク有無 ───────────────────────────────────────────
 
 type Step3Props = {
-  value: MakeupStyle | null
-  onChange: (v: MakeupStyle) => void
-  onNext: () => void
-  onBack: () => void
-}
+  value: MakeupStyle | null;
+  onChange: (v: MakeupStyle) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
 
 export function Step3({ value, onChange, onNext, onBack }: Step3Props) {
   return (
@@ -247,23 +297,28 @@ export function Step3({ value, onChange, onNext, onBack }: Step3Props) {
       </div>
       <NavRow onBack={onBack} onNext={onNext} disabled={!value} />
     </>
-  )
+  );
 }
 
 // ─── Step4: 予算 ─────────────────────────────────────────────────
 
 type Step4Props = {
-  value: BudgetRange | null
-  onChange: (v: BudgetRange) => void
-  onNext: () => void
-  onBack: () => void
-}
+  value: BudgetRange | null;
+  onChange: (v: BudgetRange) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
 
-const BUDGET_OPTIONS: { value: BudgetRange; emoji: string; label: string; desc: string }[] = [
+const BUDGET_OPTIONS: {
+  value: BudgetRange;
+  emoji: string;
+  label: string;
+  desc: string;
+}[] = [
   { value: "budget", emoji: "💴", label: "〜¥1,500", desc: "プチプラ" },
   { value: "mid", emoji: "💳", label: "〜¥3,000", desc: "ミドル" },
   { value: "premium", emoji: "🎁", label: "¥3,000〜", desc: "プレミアム" },
-]
+];
 
 export function Step4({ value, onChange, onNext, onBack }: Step4Props) {
   return (
@@ -283,23 +338,43 @@ export function Step4({ value, onChange, onNext, onBack }: Step4Props) {
       </div>
       <NavRow onBack={onBack} onNext={onNext} disabled={!value} />
     </>
-  )
+  );
 }
 
 // ─── Step5: テクスチャ ───────────────────────────────────────────
 
 type Step5Props = {
-  value: TexturePreference | null
-  onChange: (v: TexturePreference) => void
-  onNext: () => void
-  onBack: () => void
-}
+  value: TexturePreference | null;
+  onChange: (v: TexturePreference) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
 
-const TEXTURE_OPTIONS: { value: TexturePreference; emoji: string; label: string; desc: string }[] = [
-  { value: "light", emoji: "🍃", label: "さっぱり系", desc: "べたつかずサラッとしたい" },
-  { value: "moist", emoji: "🫐", label: "しっとり系", desc: "保湿感があるタイプが好き" },
-  { value: "any", emoji: "🤍", label: "こだわらない", desc: "使用感は気にしない" },
-]
+const TEXTURE_OPTIONS: {
+  value: TexturePreference;
+  emoji: string;
+  label: string;
+  desc: string;
+}[] = [
+  {
+    value: "light",
+    emoji: "🍃",
+    label: "さっぱり系",
+    desc: "べたつかずサラッとしたい",
+  },
+  {
+    value: "moist",
+    emoji: "🫐",
+    label: "しっとり系",
+    desc: "保湿感があるタイプが好き",
+  },
+  {
+    value: "any",
+    emoji: "🤍",
+    label: "こだわらない",
+    desc: "使用感は気にしない",
+  },
+];
 
 export function Step5({ value, onChange, onNext, onBack }: Step5Props) {
   return (
@@ -324,5 +399,5 @@ export function Step5({ value, onChange, onNext, onBack }: Step5Props) {
         disabled={!value}
       />
     </>
-  )
+  );
 }

@@ -1,33 +1,44 @@
-import type { MDXComponents } from "mdx/types"
-import Link from "next/link"
-import { cn } from "@/lib/utils"
+import type { MDXComponents } from "mdx/types";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 // ── アフィリエイトリンクコンポーネント ───────────────────────────
 type ProductCardProps = {
-  name: string
-  brand: string
-  price: string
-  tags?: string
-  href: string
-  emoji?: string
-  rank?: number
-  reason?: string
-}
+  name: string;
+  brand: string;
+  price: string;
+  tags?: string;
+  href: string;
+  emoji?: string;
+  rank?: number;
+  reason?: string;
+};
 
 export function ProductCard({
-  name, brand, price, tags, href, emoji = "🧴", rank, reason
+  name,
+  brand,
+  price,
+  tags,
+  href,
+  emoji = "🧴",
+  rank,
+  reason,
 }: ProductCardProps) {
-  const tagList = tags?.split(",").map((t) => t.trim()) ?? []
+  const tagList = tags?.split(",").map((t) => t.trim()) ?? [];
   return (
-    <div className={`
+    <div
+      className={`
       not-prose my-4 p-4 rounded-2xl border bg-white
       ${rank === 1 ? "border-emerald-400 shadow-sm" : "border-gray-200"}
-    `}>
+    `}
+    >
       <div className="flex gap-3 items-start">
-        <div className={`
+        <div
+          className={`
           w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0
           ${rank === 1 ? "bg-emerald-50" : "bg-gray-50"}
-        `}>
+        `}
+        >
           {emoji}
         </div>
         <div className="flex-1 min-w-0">
@@ -41,7 +52,9 @@ export function ProductCard({
               No.{rank}
             </span>
           )}
-          <p className="font-medium text-sm text-gray-900 leading-tight">{name}</p>
+          <p className="font-medium text-sm text-gray-900 leading-tight">
+            {name}
+          </p>
           <p className="text-xs text-gray-500 mb-2">{brand}</p>
           {reason && (
             <p className="text-xs text-emerald-700 mb-2">✓ {reason}</p>
@@ -49,7 +62,10 @@ export function ProductCard({
           {tagList.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-3">
               {tagList.map((tag) => (
-                <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                <span
+                  key={tag}
+                  className="text-[10px] px-2 py-0.5 rounded-full bg-gray-100 text-gray-600"
+                >
                   {tag}
                 </span>
               ))}
@@ -69,59 +85,76 @@ export function ProductCard({
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ── ポイントボックス ──────────────────────────────────────────────
-export function PointBox({ children, title = "POINT" }: { children: React.ReactNode; title?: string }) {
+export function PointBox({
+  children,
+  title = "POINT",
+}: {
+  children: React.ReactNode;
+  title?: string;
+}) {
   return (
     <div className="not-prose my-6 p-5 rounded-2xl bg-emerald-50 border border-emerald-200">
-      <p className="text-xs font-bold text-emerald-700 tracking-widest mb-2">{title}</p>
+      <p className="text-xs font-bold text-emerald-700 tracking-widest mb-2">
+        {title}
+      </p>
       <div className="text-sm text-emerald-900 leading-relaxed">{children}</div>
     </div>
-  )
+  );
 }
 
 // ── 警告ボックス ──────────────────────────────────────────────────
 export function WarnBox({ children }: { children: React.ReactNode }) {
   return (
     <div className="not-prose my-6 p-5 rounded-2xl bg-amber-50 border border-amber-200">
-      <p className="text-xs font-bold text-amber-700 tracking-widest mb-2">⚠ 注意</p>
+      <p className="text-xs font-bold text-amber-700 tracking-widest mb-2">
+        ⚠ 注意
+      </p>
       <div className="text-sm text-amber-900 leading-relaxed">{children}</div>
     </div>
-  )
+  );
 }
 
 // ── チェックリスト ────────────────────────────────────────────────
 export function CheckList({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="not-prose my-4 space-y-2">
-      {children}
-    </div>
-  )
+  return <div className="not-prose my-4 space-y-2">{children}</div>;
 }
 
 export function CheckItem({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex items-start gap-2.5 text-sm">
-      <span className="mt-0.5 w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 text-[10px] text-emerald-700">✓</span>
+      <span className="mt-0.5 w-4 h-4 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 text-[10px] text-emerald-700">
+        ✓
+      </span>
       <span className="text-gray-700 leading-relaxed">{children}</span>
     </div>
-  )
+  );
 }
 
 // ── ツールへのCTAボックス ─────────────────────────────────────────
-export function ToolCTA({ title, description, href, label }: {
-  title: string
-  description: string
-  href: string
-  label: string
+export function ToolCTA({
+  title,
+  description,
+  href,
+  label,
+}: {
+  title: string;
+  description: string;
+  href: string;
+  label: string;
 }) {
   return (
     <div className="not-prose my-8 p-5 rounded-2xl bg-linear-to-br from-emerald-50 to-teal-50 border border-emerald-200">
-      <p className="text-xs font-bold text-emerald-700 tracking-widest mb-1.5">☀️ UVlabo ツール</p>
+      <p className="text-xs font-bold text-emerald-700 tracking-widest mb-1.5">
+        ☀️ UVlabo ツール
+      </p>
       <p className="font-medium text-gray-900 mb-1">{title}</p>
-      <p className="text-sm text-gray-600 mb-4 leading-relaxed">{description}</p>
+      <p className="text-sm text-gray-600 mb-4 leading-relaxed">
+        {description}
+      </p>
       <Link
         href={href}
         className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-700 text-white text-sm font-medium hover:bg-emerald-800 transition-colors"
@@ -129,7 +162,7 @@ export function ToolCTA({ title, description, href, label }: {
         {label}
       </Link>
     </div>
-  )
+  );
 }
 
 // ── CTAボタン（シンプル単体ボタン）──────────────────────────────
@@ -154,13 +187,13 @@ export function ToolCTA({ title, description, href, label }: {
  *   <CTAButton href="https://..." label="外部サイト" external />
  */
 type CTAButtonProps = {
-  href: string
-  label: string
-  variant?: "primary" | "secondary"
-  size?: "md" | "lg"
-  fullWidth?: boolean
-  external?: boolean
-}
+  href: string;
+  label: string;
+  variant?: "primary" | "secondary";
+  size?: "md" | "lg";
+  fullWidth?: boolean;
+  external?: boolean;
+};
 
 export function CTAButton({
   href,
@@ -171,7 +204,7 @@ export function CTAButton({
   external = false,
 }: CTAButtonProps) {
   // 外部URLの自動判定（明示指定がなくても http/https で始まれば外部扱い）
-  const isExternal = external || href.startsWith("http")
+  const isExternal = external || href.startsWith("http");
 
   const baseClass = [
     "not-prose my-6 inline-flex items-center justify-center",
@@ -184,25 +217,25 @@ export function CTAButton({
       : "border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50",
   ]
     .filter(Boolean)
-    .join(" ")
+    .join(" ");
 
   const externalProps = isExternal
     ? { target: "_blank" as const, rel: "noopener noreferrer" }
-    : {}
+    : {};
 
   if (isExternal) {
     return (
       <a href={href} className={baseClass} {...externalProps}>
         {label}
       </a>
-    )
+    );
   }
 
   return (
     <Link href={href} className={baseClass}>
       {label}
     </Link>
-  )
+  );
 }
 
 // ── MDXコンポーネントのマッピング ─────────────────────────────────
@@ -221,7 +254,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         id={id}
         className={cn(
           "text-xl font-bold text-gray-900 mt-12 mb-4 pb-3 border-b-2 border-emerald-200 flex items-center gap-2 scroll-mt-24 group",
-          className
+          className,
         )}
         {...props}
       >
@@ -243,7 +276,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         id={id}
         className={cn(
           "text-base font-bold text-gray-900 mt-8 mb-3 pl-3 border-l-[3px] border-emerald-400 scroll-mt-24 group",
-          className
+          className,
         )}
         {...props}
       >
@@ -274,7 +307,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         href={href}
         className={cn(
           "text-emerald-700 underline underline-offset-2 hover:text-emerald-800 transition-colors",
-          className
+          className,
         )}
         target={href?.startsWith("http") ? "_blank" : undefined}
         rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
@@ -288,7 +321,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       <blockquote
         className={cn(
           "my-6 pl-4 border-l-4 border-emerald-300 bg-emerald-50/50 py-3 pr-4 rounded-r-xl text-gray-700 text-sm leading-relaxed italic",
-          className
+          className,
         )}
         {...props}
       >
@@ -298,7 +331,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     table: ({ className, children, ...props }) => (
       <div className="overflow-x-auto my-6">
-        <table className={cn("w-full text-sm border-collapse", className)} {...props}>
+        <table
+          className={cn("w-full text-sm border-collapse", className)}
+          {...props}
+        >
           {children}
         </table>
       </div>
@@ -306,7 +342,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     th: ({ className, children, ...props }) => (
       <th
-        className={cn("px-3 py-2.5 bg-emerald-700 text-white font-medium text-left text-xs", className)}
+        className={cn(
+          "px-3 py-2.5 bg-emerald-700 text-white font-medium text-left text-xs",
+          className,
+        )}
         {...props}
       >
         {children}
@@ -315,7 +354,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     td: ({ className, children, ...props }) => (
       <td
-        className={cn("px-3 py-2.5 border-b border-gray-100 text-gray-700", className)}
+        className={cn(
+          "px-3 py-2.5 border-b border-gray-100 text-gray-700",
+          className,
+        )}
         {...props}
       >
         {children}
@@ -324,7 +366,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
 
     code: ({ className, children, ...props }) => (
       <code
-        className={cn("px-1.5 py-0.5 rounded bg-gray-100 text-emerald-700 text-[13px] font-mono", className)}
+        className={cn(
+          "px-1.5 py-0.5 rounded bg-gray-100 text-emerald-700 text-[13px] font-mono",
+          className,
+        )}
         {...props}
       >
         {children}
@@ -332,5 +377,5 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
 
     ...components,
-  }
+  };
 }

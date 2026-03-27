@@ -1,61 +1,68 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
 import type {
-  BurnLevel,
-  BurnArea,
-  ElapsedTime,
   AfterCareStep,
-} from "@/lib/aftercare/types"
+  BurnArea,
+  BurnLevel,
+  ElapsedTime,
+} from "@/lib/aftercare/types";
 import {
-  BURN_LEVEL_LABEL,
-  AREA_LABEL,
-  ELAPSED_LABEL,
   AFTERCARE_TOTAL_STEPS,
-} from "@/lib/aftercare/types"
+  AREA_LABEL,
+  BURN_LEVEL_LABEL,
+  ELAPSED_LABEL,
+} from "@/lib/aftercare/types";
+import { cn } from "@/lib/utils";
 
 // ─── ステップバー ────────────────────────────────────────────────
 
 export function AfterCareStepBar({ current }: { current: AfterCareStep }) {
   return (
     <div className="flex gap-1.5 mb-6">
-      {Array.from({ length: AFTERCARE_TOTAL_STEPS }, (_, i) => i + 1).map((n) => (
-        <div
-          key={n}
-          className={cn(
-            "flex-1 h-1 rounded-full transition-all duration-300",
-            n < current && "bg-orange-400",
-            n === current && "bg-orange-600",
-            n > current && "bg-secondary"
-          )}
-        />
-      ))}
+      {Array.from({ length: AFTERCARE_TOTAL_STEPS }, (_, i) => i + 1).map(
+        (n) => (
+          <div
+            key={n}
+            className={cn(
+              "flex-1 h-1 rounded-full transition-all duration-300",
+              n < current && "bg-orange-400",
+              n === current && "bg-orange-600",
+              n > current && "bg-secondary",
+            )}
+          />
+        ),
+      )}
     </div>
-  )
+  );
 }
 
 // ─── 共通ChoiceCard ──────────────────────────────────────────────
 
 type ChoiceCardProps = {
-  emoji: string
-  label: string
-  description?: string
-  selected: boolean
-  onClick: () => void
-  accentColor?: "orange" | "emerald"
-}
+  emoji: string;
+  label: string;
+  description?: string;
+  selected: boolean;
+  onClick: () => void;
+  accentColor?: "orange" | "emerald";
+};
 
 function ChoiceCard({
-  emoji, label, description, selected, onClick, accentColor = "orange",
+  emoji,
+  label,
+  description,
+  selected,
+  onClick,
+  accentColor = "orange",
 }: ChoiceCardProps) {
   const accent =
     accentColor === "orange"
       ? "hover:border-orange-400 hover:bg-orange-50/50 selected:border-orange-600"
-      : "hover:border-emerald-400 hover:bg-emerald-50/50"
+      : "hover:border-emerald-400 hover:bg-emerald-50/50";
   const selectedClass =
     accentColor === "orange"
       ? "border-orange-600 bg-orange-50 ring-1 ring-orange-500"
-      : "border-emerald-600 bg-emerald-50 ring-1 ring-emerald-600"
+      : "border-emerald-600 bg-emerald-50 ring-1 ring-emerald-600";
 
   return (
     <button
@@ -65,30 +72,39 @@ function ChoiceCard({
         "flex flex-col items-center gap-2 p-4 rounded-xl border text-center w-full",
         "transition-all duration-150 cursor-pointer",
         "hover:border-orange-400 hover:bg-orange-50/40",
-        selected ? selectedClass : "border-border bg-card"
+        selected ? selectedClass : "border-border bg-card",
       )}
     >
       <span className="text-2xl leading-none">{emoji}</span>
-      <span className={cn("text-sm font-medium leading-tight",
-        selected ? (accentColor === "orange" ? "text-orange-900" : "text-emerald-900") : "text-foreground"
-      )}>
+      <span
+        className={cn(
+          "text-sm font-medium leading-tight",
+          selected
+            ? accentColor === "orange"
+              ? "text-orange-900"
+              : "text-emerald-900"
+            : "text-foreground",
+        )}
+      >
         {label}
       </span>
       {description && (
-        <span className="text-[11px] text-muted-foreground leading-snug">{description}</span>
+        <span className="text-[11px] text-muted-foreground leading-snug">
+          {description}
+        </span>
       )}
     </button>
-  )
+  );
 }
 
 // ─── チェックボックスカード（複数選択用）────────────────────────
 
 type CheckCardProps = {
-  emoji: string
-  label: string
-  checked: boolean
-  onClick: () => void
-}
+  emoji: string;
+  label: string;
+  checked: boolean;
+  onClick: () => void;
+};
 
 function CheckCard({ emoji, label, checked, onClick }: CheckCardProps) {
   return (
@@ -101,39 +117,59 @@ function CheckCard({ emoji, label, checked, onClick }: CheckCardProps) {
         "hover:border-orange-400 hover:bg-orange-50/40",
         checked
           ? "border-orange-500 bg-orange-50 ring-1 ring-orange-400"
-          : "border-border bg-card"
+          : "border-border bg-card",
       )}
     >
       <span className="text-xl leading-none">{emoji}</span>
-      <span className={cn("text-sm font-medium flex-1",
-        checked ? "text-orange-900" : "text-foreground"
-      )}>
+      <span
+        className={cn(
+          "text-sm font-medium flex-1",
+          checked ? "text-orange-900" : "text-foreground",
+        )}
+      >
         {label}
       </span>
-      <div className={cn(
-        "w-4 h-4 rounded border-2 flex items-center justify-center shrink-0",
-        checked ? "bg-orange-500 border-orange-500" : "border-border"
-      )}>
+      <div
+        className={cn(
+          "w-4 h-4 rounded border-2 flex items-center justify-center shrink-0",
+          checked ? "bg-orange-500 border-orange-500" : "border-border",
+        )}
+      >
         {checked && (
-          <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 10 8">
-            <path d="M1 4l3 3 5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          <svg
+            className="w-2.5 h-2.5 text-white"
+            fill="none"
+            viewBox="0 0 10 8"
+          >
+            <path
+              d="M1 4l3 3 5-6"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
           </svg>
         )}
       </div>
     </button>
-  )
+  );
 }
 
 // ─── NavRow ──────────────────────────────────────────────────────
 
 type NavRowProps = {
-  onBack?: () => void
-  onNext: () => void
-  nextLabel?: string
-  disabled?: boolean
-}
+  onBack?: () => void;
+  onNext: () => void;
+  nextLabel?: string;
+  disabled?: boolean;
+};
 
-function NavRow({ onBack, onNext, nextLabel = "次へ", disabled = false }: NavRowProps) {
+function NavRow({
+  onBack,
+  onNext,
+  nextLabel = "次へ",
+  disabled = false,
+}: NavRowProps) {
   return (
     <div className="flex gap-2.5 mt-6">
       {onBack && (
@@ -153,30 +189,48 @@ function NavRow({ onBack, onNext, nextLabel = "次へ", disabled = false }: NavR
           "flex-1 py-3 rounded-xl text-sm font-medium transition-all",
           disabled
             ? "bg-secondary text-muted-foreground cursor-not-allowed"
-            : "bg-orange-600 text-white hover:bg-orange-700 active:scale-[0.98]"
+            : "bg-orange-600 text-white hover:bg-orange-700 active:scale-[0.98]",
         )}
       >
         {nextLabel}
       </button>
     </div>
-  )
+  );
 }
 
 // ─── Step1: 日焼けの程度 ─────────────────────────────────────────
 
 const BURN_OPTIONS: {
-  value: BurnLevel; emoji: string; desc: string; color: string
+  value: BurnLevel;
+  emoji: string;
+  desc: string;
+  color: string;
 }[] = [
-  { value: "mild",     emoji: "🟡", desc: "少し赤い・ほんのり熱い程度", color: "text-yellow-700" },
-  { value: "moderate", emoji: "🟠", desc: "はっきり赤い・ヒリヒリ痛い", color: "text-orange-600" },
-  { value: "severe",   emoji: "🔴", desc: "強い痛み・水ぶくれの可能性", color: "text-red-600" },
-]
+  {
+    value: "mild",
+    emoji: "🟡",
+    desc: "少し赤い・ほんのり熱い程度",
+    color: "text-yellow-700",
+  },
+  {
+    value: "moderate",
+    emoji: "🟠",
+    desc: "はっきり赤い・ヒリヒリ痛い",
+    color: "text-orange-600",
+  },
+  {
+    value: "severe",
+    emoji: "🔴",
+    desc: "強い痛み・水ぶくれの可能性",
+    color: "text-red-600",
+  },
+];
 
 type Step1Props = {
-  value: BurnLevel | null
-  onChange: (v: BurnLevel) => void
-  onNext: () => void
-}
+  value: BurnLevel | null;
+  onChange: (v: BurnLevel) => void;
+  onNext: () => void;
+};
 
 export function AfterCareStep1({ value, onChange, onNext }: Step1Props) {
   return (
@@ -186,7 +240,9 @@ export function AfterCareStep1({ value, onChange, onNext }: Step1Props) {
           STEP 1 / {AFTERCARE_TOTAL_STEPS}
         </p>
         <h2 className="text-xl font-medium leading-snug tracking-tight">
-          日焼けの程度を<br />教えてください
+          日焼けの程度を
+          <br />
+          教えてください
         </h2>
       </div>
       <div className="flex flex-col gap-2.5">
@@ -212,32 +268,37 @@ export function AfterCareStep1({ value, onChange, onNext }: Step1Props) {
       )}
       <NavRow onNext={onNext} disabled={!value} />
     </>
-  )
+  );
 }
 
 // ─── Step2: 日焼けした部位 ──────────────────────────────────────
 
 const AREA_OPTIONS: { value: BurnArea; emoji: string }[] = [
-  { value: "face",  emoji: "😊" },
-  { value: "neck",  emoji: "🪷" },
-  { value: "arms",  emoji: "💪" },
-  { value: "legs",  emoji: "🦵" },
-  { value: "back",  emoji: "🔙" },
-]
+  { value: "face", emoji: "😊" },
+  { value: "neck", emoji: "🪷" },
+  { value: "arms", emoji: "💪" },
+  { value: "legs", emoji: "🦵" },
+  { value: "back", emoji: "🔙" },
+];
 
 type Step2Props = {
-  value: BurnArea[]
-  onChange: (v: BurnArea[]) => void
-  onNext: () => void
-  onBack: () => void
-}
+  value: BurnArea[];
+  onChange: (v: BurnArea[]) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
 
-export function AfterCareStep2({ value, onChange, onNext, onBack }: Step2Props) {
+export function AfterCareStep2({
+  value,
+  onChange,
+  onNext,
+  onBack,
+}: Step2Props) {
   const toggle = (area: BurnArea) => {
     onChange(
-      value.includes(area) ? value.filter((a) => a !== area) : [...value, area]
-    )
-  }
+      value.includes(area) ? value.filter((a) => a !== area) : [...value, area],
+    );
+  };
 
   return (
     <>
@@ -246,7 +307,9 @@ export function AfterCareStep2({ value, onChange, onNext, onBack }: Step2Props) 
           STEP 2 / {AFTERCARE_TOTAL_STEPS}
         </p>
         <h2 className="text-xl font-medium leading-snug tracking-tight">
-          日焼けした部位を<br />選んでください（複数可）
+          日焼けした部位を
+          <br />
+          選んでください（複数可）
         </h2>
       </div>
       <div className="flex flex-col gap-2">
@@ -262,25 +325,30 @@ export function AfterCareStep2({ value, onChange, onNext, onBack }: Step2Props) 
       </div>
       <NavRow onBack={onBack} onNext={onNext} disabled={value.length === 0} />
     </>
-  )
+  );
 }
 
 // ─── Step3: 経過時間 ─────────────────────────────────────────────
 
 const ELAPSED_OPTIONS: { value: ElapsedTime; emoji: string; desc: string }[] = [
-  { value: "within3h",  emoji: "⚡", desc: "まだ肌が熱い・赤みが出はじめ" },
+  { value: "within3h", emoji: "⚡", desc: "まだ肌が熱い・赤みが出はじめ" },
   { value: "within12h", emoji: "🕐", desc: "赤みが定着・ヒリヒリが続いている" },
-  { value: "next_day",  emoji: "📅", desc: "翌日〜数日後の対処" },
-]
+  { value: "next_day", emoji: "📅", desc: "翌日〜数日後の対処" },
+];
 
 type Step3Props = {
-  value: ElapsedTime | null
-  onChange: (v: ElapsedTime) => void
-  onNext: () => void
-  onBack: () => void
-}
+  value: ElapsedTime | null;
+  onChange: (v: ElapsedTime) => void;
+  onNext: () => void;
+  onBack: () => void;
+};
 
-export function AfterCareStep3({ value, onChange, onNext, onBack }: Step3Props) {
+export function AfterCareStep3({
+  value,
+  onChange,
+  onNext,
+  onBack,
+}: Step3Props) {
   return (
     <>
       <div className="mb-5">
@@ -288,7 +356,9 @@ export function AfterCareStep3({ value, onChange, onNext, onBack }: Step3Props) 
           STEP 3 / {AFTERCARE_TOTAL_STEPS}
         </p>
         <h2 className="text-xl font-medium leading-snug tracking-tight">
-          日焼けしてから<br />どれくらい経ちますか？
+          日焼けしてから
+          <br />
+          どれくらい経ちますか？
         </h2>
       </div>
       <div className="flex flex-col gap-2.5">
@@ -310,5 +380,5 @@ export function AfterCareStep3({ value, onChange, onNext, onBack }: Step3Props) 
         disabled={!value}
       />
     </>
-  )
+  );
 }

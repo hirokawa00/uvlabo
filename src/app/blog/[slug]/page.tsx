@@ -1,49 +1,54 @@
-import type { Metadata } from "next"
-import { notFound } from "next/navigation"
-import Link from "next/link"
-import { BLOG_POSTS, CATEGORY_CONFIG, getPostBySlug, formatDate } from "@/lib/blog"
-import { Footer } from "@/components/Footer"
-import { Breadcrumb } from "@/components/blog/Breadcrumb"
-import { ShareButtons } from "@/components/blog/ShareButtons"
-import { AutoTableOfContents } from "@/components/blog/AutoTableOfContents"
+import { Calendar, Clock } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { AutoTableOfContents } from "@/components/blog/AutoTableOfContents";
+import { Breadcrumb } from "@/components/blog/Breadcrumb";
 import {
-  RelatedPosts,
-  PrevNextNav,
   CategoryNav,
+  PrevNextNav,
+  RelatedPosts,
   SidebarToolCTA,
-} from "@/components/blog/NavigationWidgets"
-import { Clock, Calendar } from "lucide-react"
-
+} from "@/components/blog/NavigationWidgets";
+import { ShareButtons } from "@/components/blog/ShareButtons";
+import { Footer } from "@/components/Footer";
+import PaValueExplained from "@/content/blog/pa-value-explained.mdx";
+import SensitiveSkinSunscreen from "@/content/blog/sensitive-skin-sunscreen-2025.mdx";
 // ── MDXを静的にインポート（Webpackの静的解析に対応）─────────────
-import SPF30VsSPF50 from "@/content/blog/spf30-vs-spf50.mdx"
-import SensitiveSkinSunscreen from "@/content/blog/sensitive-skin-sunscreen-2025.mdx"
-import PaValueExplained from "@/content/blog/pa-value-explained.mdx"
-import SunburnAftercare from "@/content/blog/sunburn-aftercare-72hours.mdx"
+import SPF30VsSPF50 from "@/content/blog/spf30-vs-spf50.mdx";
+import SunburnAftercare from "@/content/blog/sunburn-aftercare-72hours.mdx";
+import {
+  BLOG_POSTS,
+  CATEGORY_CONFIG,
+  formatDate,
+  getPostBySlug,
+} from "@/lib/blog";
+
 // 新しい記事を追加するたびにここにimportを追加してください
 
 const MDX_MAP: Record<string, React.ComponentType> = {
-  "spf30-vs-spf50":                SPF30VsSPF50,
+  "spf30-vs-spf50": SPF30VsSPF50,
   "sensitive-skin-sunscreen-2025": SensitiveSkinSunscreen,
-  "sunburn-aftercare-72hours":  SunburnAftercare,
-  "pa-value-explained":  PaValueExplained,
-}
+  "sunburn-aftercare-72hours": SunburnAftercare,
+  "pa-value-explained": PaValueExplained,
+};
 
 // ─────────────────────────────────────────────────────────────────
 
 type Props = {
-  params: Promise<{ slug: string }>
-}
+  params: Promise<{ slug: string }>;
+};
 
 export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({ slug: post.slug }))
+  return BLOG_POSTS.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post) return { title: "記事が見つかりません" }
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) return { title: "記事が見つかりません" };
 
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com"
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com";
   return {
     title: post.title,
     description: post.description,
@@ -58,20 +63,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       tags: post.tags,
     },
     alternates: { canonical: `${BASE_URL}/blog/${post.slug}` },
-  }
+  };
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  const { slug } = await params
-  const post = getPostBySlug(slug)
-  if (!post) notFound()
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
+  if (!post) notFound();
 
-  const PostContent = MDX_MAP[slug]
-  if (!PostContent) notFound()
+  const PostContent = MDX_MAP[slug];
+  if (!PostContent) notFound();
 
-  const cfg = CATEGORY_CONFIG[post.category]
-  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com"
-  const articleUrl = `${BASE_URL}/blog/${post.slug}`
+  const cfg = CATEGORY_CONFIG[post.category];
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com";
+  const articleUrl = `${BASE_URL}/blog/${post.slug}`;
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -84,11 +89,10 @@ export default async function BlogPostPage({ params }: Props) {
     publisher: { "@type": "Organization", name: "UVlabo", url: BASE_URL },
     keywords: post.tags.join(", "),
     mainEntityOfPage: { "@type": "WebPage", "@id": articleUrl },
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-
       {/* ── ヘッダー ─────────────────────────────────────────── */}
       <header className="border-b border-border sticky top-0 z-20 bg-background/90 backdrop-blur">
         <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -114,10 +118,8 @@ export default async function BlogPostPage({ params }: Props) {
 
       <main className="flex-1 max-w-5xl mx-auto w-full px-4 py-8">
         <div className="flex gap-8">
-
           {/* ── メインカラム ────────────────────────────────── */}
           <div className="flex-1 min-w-0">
-
             {/* 記事ヘッダー */}
             <div className="mb-8">
               <Link
@@ -141,14 +143,15 @@ export default async function BlogPostPage({ params }: Props) {
                     <span>更新: {formatDate(post.updatedAt)}</span>
                   )}
                   <span className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    約{post.readingTimeMin}分
+                    <Clock className="w-3 h-3" />約{post.readingTimeMin}分
                   </span>
                 </div>
                 <ShareButtons title={post.title} url={articleUrl} />
               </div>
 
-              <div className={`w-full rounded-2xl bg-linear-to-br ${post.coverColor} py-12 flex items-center justify-center mb-6`}>
+              <div
+                className={`w-full rounded-2xl bg-linear-to-br ${post.coverColor} py-12 flex items-center justify-center mb-6`}
+              >
                 <span className="text-7xl">{post.coverEmoji}</span>
               </div>
 
@@ -193,14 +196,19 @@ export default async function BlogPostPage({ params }: Props) {
 
             {/* 記事下シェア */}
             <div className="mt-10 pt-6 border-t border-border flex items-center justify-between">
-              <p className="text-sm text-muted-foreground">この記事は参考になりましたか？</p>
+              <p className="text-sm text-muted-foreground">
+                この記事は参考になりましたか？
+              </p>
               <ShareButtons title={post.title} url={articleUrl} />
             </div>
 
             {/* タグ */}
             <div className="mt-6 flex flex-wrap gap-1.5">
               {post.tags.map((tag) => (
-                <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-secondary border border-border text-muted-foreground">
+                <span
+                  key={tag}
+                  className="text-xs px-2.5 py-1 rounded-full bg-secondary border border-border text-muted-foreground"
+                >
                   #{tag}
                 </span>
               ))}
@@ -218,11 +226,17 @@ export default async function BlogPostPage({ params }: Props) {
 
             {/* 関連記事 */}
             <div className="mt-8">
-              <RelatedPosts currentSlug={slug} currentCategory={post.category} />
+              <RelatedPosts
+                currentSlug={slug}
+                currentCategory={post.category}
+              />
             </div>
 
             <div className="mt-8 text-center">
-              <Link href="/blog" className="text-sm text-emerald-700 hover:text-emerald-800 transition-colors">
+              <Link
+                href="/blog"
+                className="text-sm text-emerald-700 hover:text-emerald-800 transition-colors"
+              >
                 ← コラム一覧へ
               </Link>
             </div>
@@ -245,5 +259,5 @@ export default async function BlogPostPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </div>
-  )
+  );
 }

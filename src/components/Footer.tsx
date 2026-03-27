@@ -1,12 +1,11 @@
-import Link from "next/link"
+import Link from "next/link";
 
 export function Footer() {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="border-t border-border mt-16 bg-background">
       <div className="max-w-lg mx-auto px-4 py-8">
-
         {/* ロゴ */}
         <div className="flex items-center gap-1.5 mb-4">
           <span>☀️</span>
@@ -32,16 +31,28 @@ export function Footer() {
 
         {/* リンク */}
         <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground mb-6">
-          <Link href="/privacy" className="hover:text-foreground transition-colors">
+          <Link
+            href="/privacy"
+            className="hover:text-foreground transition-colors"
+          >
             プライバシーポリシー
           </Link>
-          <Link href="/terms" className="hover:text-foreground transition-colors">
+          <Link
+            href="/terms"
+            className="hover:text-foreground transition-colors"
+          >
             利用規約
           </Link>
-          <Link href="/legal" className="hover:text-foreground transition-colors">
+          <Link
+            href="/legal"
+            className="hover:text-foreground transition-colors"
+          >
             特定商取引法に基づく表記
           </Link>
-          <Link href="/contact" className="hover:text-foreground transition-colors">
+          <Link
+            href="/contact"
+            className="hover:text-foreground transition-colors"
+          >
             お問い合わせ
           </Link>
         </div>
@@ -51,5 +62,5 @@ export function Footer() {
         </p>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import dynamic from "next/dynamic"
-import Link from "next/link"
-import { UVCard } from "@/components/UVCard"
-import { BookOpen } from "lucide-react"
+import { BookOpen } from "lucide-react";
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useState } from "react";
+import { UVCard } from "@/components/UVCard";
 
-type Tab = "uv" | "diagnosis" | "aftercare"
+type Tab = "uv" | "diagnosis" | "aftercare";
 
 const TABS: { key: Tab; label: string; emoji: string }[] = [
   { key: "uv", label: "UV指数", emoji: "☀️" },
   { key: "diagnosis", label: "日焼け止め診断", emoji: "🔍" },
   { key: "aftercare", label: "事後ケア", emoji: "🌊" },
-]
+];
 
 // ── タブコンテンツを遅延読み込み ───────────────────────────────
 const DiagnosisContainer = dynamic(
@@ -30,8 +30,8 @@ const DiagnosisContainer = dynamic(
         <div className="h-10 rounded-xl bg-secondary animate-pulse" />
       </div>
     ),
-  }
-)
+  },
+);
 
 const AfterCareContainer = dynamic(
   () =>
@@ -46,12 +46,12 @@ const AfterCareContainer = dynamic(
         <div className="h-12 rounded-xl bg-secondary animate-pulse" />
       </div>
     ),
-  }
-)
+  },
+);
 
 export function HomeTabsClient() {
-  const [activeTab, setActiveTab] = useState<Tab>("uv")
-  const [currentUV, setCurrentUV] = useState<number | undefined>(undefined)
+  const [activeTab, setActiveTab] = useState<Tab>("uv");
+  const [currentUV, setCurrentUV] = useState<number | undefined>(undefined);
 
   return (
     <>
@@ -123,9 +123,11 @@ export function HomeTabsClient() {
           </div>
         )}
 
-        {activeTab === "diagnosis" && <DiagnosisContainer uvIndex={currentUV} />}
+        {activeTab === "diagnosis" && (
+          <DiagnosisContainer uvIndex={currentUV} />
+        )}
         {activeTab === "aftercare" && <AfterCareContainer />}
       </section>
     </>
-  )
+  );
 }

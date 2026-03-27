@@ -1,20 +1,23 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "利用規約",
   description: "UVlaboの利用規約です。",
   robots: { index: true, follow: false },
-}
+};
 
-const LAST_UPDATED = "2025年5月1日"
+const LAST_UPDATED = "2025年5月1日";
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            href="/"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
             ← トップに戻る
           </Link>
           <span className="text-muted-foreground/40">|</span>
@@ -26,10 +29,11 @@ export default function TermsPage() {
 
       <main className="max-w-2xl mx-auto px-4 py-10">
         <h1 className="text-2xl font-medium mb-1.5">利用規約</h1>
-        <p className="text-sm text-muted-foreground mb-10">最終更新日：{LAST_UPDATED}</p>
+        <p className="text-sm text-muted-foreground mb-10">
+          最終更新日：{LAST_UPDATED}
+        </p>
 
         <div className="space-y-10 text-sm leading-relaxed">
-
           <section>
             <h2 className="text-base font-medium mb-3">第1条（適用）</h2>
             <p className="text-muted-foreground">
@@ -77,7 +81,9 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-medium mb-3">第4条（サービスの変更・停止）</h2>
+            <h2 className="text-base font-medium mb-3">
+              第4条（サービスの変更・停止）
+            </h2>
             <p className="text-muted-foreground">
               運営者は、ユーザーへの事前通知なく当サービスの内容を変更・停止することが
               あります。これによってユーザーに生じた損害について、運営者は責任を負いません。
@@ -93,7 +99,9 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-medium mb-3">第6条（準拠法・管轄裁判所）</h2>
+            <h2 className="text-base font-medium mb-3">
+              第6条（準拠法・管轄裁判所）
+            </h2>
             <p className="text-muted-foreground">
               本規約の解釈にあたっては、日本法を準拠法とします。
               当サービスに関する紛争については、東京地方裁判所を専属的合意管轄とします。
@@ -107,15 +115,26 @@ export default function TermsPage() {
               変更後の規約は本ページに掲載した時点で効力を生じます。
             </p>
           </section>
-
         </div>
 
         <div className="mt-12 pt-6 border-t border-border flex gap-4 text-xs text-muted-foreground">
-          <Link href="/privacy" className="hover:text-foreground transition-colors">プライバシーポリシー</Link>
-          <Link href="/legal" className="hover:text-foreground transition-colors">特定商取引法に基づく表記</Link>
-          <Link href="/" className="hover:text-foreground transition-colors">トップ</Link>
+          <Link
+            href="/privacy"
+            className="hover:text-foreground transition-colors"
+          >
+            プライバシーポリシー
+          </Link>
+          <Link
+            href="/legal"
+            className="hover:text-foreground transition-colors"
+          >
+            特定商取引法に基づく表記
+          </Link>
+          <Link href="/" className="hover:text-foreground transition-colors">
+            トップ
+          </Link>
         </div>
       </main>
     </div>
-  )
+  );
 }

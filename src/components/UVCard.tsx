@@ -1,26 +1,30 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
-import { useUVData, uvIndexToColor, uvIndexToBarWidth } from "@/hooks/useUVData"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
-import { RefreshCw, MapPin, AlertTriangle } from "lucide-react"
+import { AlertTriangle, MapPin, RefreshCw } from "lucide-react";
+import { useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  useUVData,
+  uvIndexToBarWidth,
+  uvIndexToColor,
+} from "@/hooks/useUVData";
 
 type Props = {
-  spf?: number
-  onUVLoaded?: (uvIndex: number) => void
-}
+  spf?: number;
+  onUVLoaded?: (uvIndex: number) => void;
+};
 
 export function UVCard({ spf = 50, onUVLoaded }: Props) {
-  const { state, refresh } = useUVData(spf)
+  const { state, refresh } = useUVData(spf);
 
   useEffect(() => {
     if (state.status === "success" && onUVLoaded) {
-      onUVLoaded(state.data.currentUV)
+      onUVLoaded(state.data.currentUV);
     }
-  }, [state, onUVLoaded])
+  }, [state, onUVLoaded]);
 
   // ── ローディング状態 ───────────────────────────────────────────
   if (state.status === "idle" || state.status === "locating") {
@@ -32,7 +36,7 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
           <Skeleton className="h-4 w-full" />
         </CardContent>
       </Card>
-    )
+    );
   }
 
   if (state.status === "loading") {
@@ -46,7 +50,7 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
           <Skeleton className="h-4 w-full" />
         </CardContent>
       </Card>
-    )
+    );
   }
 
   // ── エラー状態 ────────────────────────────────────────────────
@@ -58,17 +62,22 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
             <AlertTriangle className="w-4 h-4 mt-0.5 shrink-0" />
             <p className="text-sm">{state.message}</p>
           </div>
-          <Button variant="outline" size="sm" onClick={refresh} className="w-full">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refresh}
+            className="w-full"
+          >
             <RefreshCw className="w-3 h-3 mr-1" /> 再試行
           </Button>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   // ── 成功状態 ──────────────────────────────────────────────────
-  const { data } = state
-  const colors = uvIndexToColor(data.currentUV)
+  const { data } = state;
+  const colors = uvIndexToColor(data.currentUV);
 
   return (
     <div className="space-y-3">
@@ -95,9 +104,13 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
           {/* UV指数メイン表示 */}
           <div className="flex items-end gap-4 mb-4">
             <div>
-              <p className="text-xs text-muted-foreground mb-0.5">現在のUV指数</p>
+              <p className="text-xs text-muted-foreground mb-0.5">
+                現在のUV指数
+              </p>
               <div className="flex items-baseline gap-1.5">
-                <span className={`text-5xl font-semibold tabular-nums ${colors.text}`}>
+                <span
+                  className={`text-5xl font-semibold tabular-nums ${colors.text}`}
+                >
                   {data.currentUV}
                 </span>
                 <Badge
@@ -122,7 +135,8 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
           {/* アドバイスバッジ */}
           <div className="flex flex-wrap gap-1.5 mb-4">
             <Badge variant="outline" className="text-xs">
-              推奨SPF {data.spfRecommended}{data.spfRecommended === 50 ? "+" : ""}
+              推奨SPF {data.spfRecommended}
+              {data.spfRecommended === 50 ? "+" : ""}
             </Badge>
             <Badge variant="outline" className="text-xs">
               {data.reapplyIntervalMin}分ごとに塗り直し
@@ -137,11 +151,16 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
             <p className="text-xs text-muted-foreground mb-2">時間別UV予報</p>
             <div className="grid grid-cols-7 gap-1">
               {data.hourlyForecast.map((h) => {
-                const c = uvIndexToColor(h.uvIndex)
-                const barW = uvIndexToBarWidth(h.uvIndex)
+                const c = uvIndexToColor(h.uvIndex);
+                const barW = uvIndexToBarWidth(h.uvIndex);
                 return (
-                  <div key={h.time} className="flex flex-col items-center gap-1">
-                    <span className="text-[10px] text-muted-foreground">{h.time.slice(0, 2)}時</span>
+                  <div
+                    key={h.time}
+                    className="flex flex-col items-center gap-1"
+                  >
+                    <span className="text-[10px] text-muted-foreground">
+                      {h.time.slice(0, 2)}時
+                    </span>
                     {/* 縦バー */}
                     <div className="relative w-full h-12 bg-secondary rounded-sm overflow-hidden flex items-end">
                       <div
@@ -149,11 +168,13 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
                         style={{ height: `${barW}%` }}
                       />
                     </div>
-                    <span className={`text-[11px] font-medium tabular-nums ${c.text}`}>
+                    <span
+                      className={`text-[11px] font-medium tabular-nums ${c.text}`}
+                    >
                       {h.uvIndex}
                     </span>
                   </div>
-                )
+                );
               })}
             </div>
           </div>
@@ -166,5 +187,5 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
         実際の値と異なる場合があります。
       </p>
     </div>
-  )
+  );
 }

@@ -1,45 +1,45 @@
-"use client"
+"use client";
 
-import { useState, useCallback } from "react"
+import { useCallback, useState } from "react";
+import { buildAfterCareGuide } from "@/lib/aftercare/engine";
 import type {
-  BurnLevel,
-  BurnArea,
-  ElapsedTime,
-  AfterCareStep,
   AfterCareInput,
-} from "@/lib/aftercare/types"
-import { buildAfterCareGuide } from "@/lib/aftercare/engine"
+  AfterCareStep,
+  BurnArea,
+  BurnLevel,
+  ElapsedTime,
+} from "@/lib/aftercare/types";
+import { AfterCareGuideResult } from "./AfterCareGuideResult";
 import {
-  AfterCareStepBar,
   AfterCareStep1,
   AfterCareStep2,
   AfterCareStep3,
-} from "./AfterCareSteps"
-import { AfterCareGuideResult } from "./AfterCareGuideResult"
+  AfterCareStepBar,
+} from "./AfterCareSteps";
 
 type State = {
-  step: AfterCareStep | "start" | "result"
-  burnLevel: BurnLevel | null
-  areas: BurnArea[]
-  elapsed: ElapsedTime | null
-}
+  step: AfterCareStep | "start" | "result";
+  burnLevel: BurnLevel | null;
+  areas: BurnArea[];
+  elapsed: ElapsedTime | null;
+};
 
 const INITIAL_STATE: State = {
   step: "start",
   burnLevel: null,
   areas: [],
   elapsed: null,
-}
+};
 
 export function AfterCareContainer() {
-  const [state, setState] = useState<State>(INITIAL_STATE)
+  const [state, setState] = useState<State>(INITIAL_STATE);
 
   const goTo = useCallback((step: State["step"]) => {
-    setState((prev) => ({ ...prev, step }))
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }, [])
+    setState((prev) => ({ ...prev, step }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
-  const handleRetry = useCallback(() => setState(INITIAL_STATE), [])
+  const handleRetry = useCallback(() => setState(INITIAL_STATE), []);
 
   // ── 開始画面 ──────────────────────────────────────────────────
   if (state.step === "start") {
@@ -49,7 +49,8 @@ export function AfterCareContainer() {
           <p className="text-3xl mb-3">🌊</p>
           <h2 className="text-lg font-medium mb-1.5">日焼けあとのケアガイド</h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            焼けた程度・部位・経過時間を入力するだけで<br />
+            焼けた程度・部位・経過時間を入力するだけで
+            <br />
             今夜から始められるケア手順が分かります
           </p>
         </div>
@@ -67,22 +68,22 @@ export function AfterCareContainer() {
           ケアガイドをはじめる →
         </button>
       </div>
-    )
+    );
   }
 
   // ── 結果画面 ──────────────────────────────────────────────────
   if (state.step === "result") {
     if (!state.burnLevel || state.areas.length === 0 || !state.elapsed) {
-      setState(INITIAL_STATE)
-      return null
+      setState(INITIAL_STATE);
+      return null;
     }
     const input: AfterCareInput = {
       burnLevel: state.burnLevel,
       areas: state.areas,
       elapsed: state.elapsed,
-    }
-    const guide = buildAfterCareGuide(input)
-    return <AfterCareGuideResult guide={guide} onRetry={handleRetry} />
+    };
+    const guide = buildAfterCareGuide(input);
+    return <AfterCareGuideResult guide={guide} onRetry={handleRetry} />;
   }
 
   // ── ステップ画面 ──────────────────────────────────────────────
@@ -114,5 +115,5 @@ export function AfterCareContainer() {
         />
       )}
     </div>
-  )
+  );
 }

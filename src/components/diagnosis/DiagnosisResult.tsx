@@ -1,28 +1,30 @@
-"use client"
+"use client";
 
-import type { DiagnosisResult } from "@/lib/diagnosis/types"
+import { Bell, ExternalLink, RefreshCw } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import {
-  SKIN_TYPE_LABEL,
-  SCENE_LABEL,
   MAKEUP_LABEL,
-} from "@/lib/diagnosis/engine"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent } from "@/components/ui/card"
-import { ExternalLink, RefreshCw, Bell } from "lucide-react"
+  SCENE_LABEL,
+  SKIN_TYPE_LABEL,
+} from "@/lib/diagnosis/engine";
+import type { DiagnosisResult } from "@/lib/diagnosis/types";
 
 type Props = {
-  result: DiagnosisResult
-  onRetry: () => void
-}
+  result: DiagnosisResult;
+  onRetry: () => void;
+};
 
 export function DiagnosisResult({ result, onRetry }: Props) {
-  const { input, recommended, skinAdvice, sceneAdvice, reapplyTip } = result
+  const { input, recommended, skinAdvice, sceneAdvice, reapplyTip } = result;
 
   return (
     <div className="space-y-4">
       {/* プロフィールサマリー */}
       <div className="bg-secondary/60 rounded-xl px-4 py-3">
-        <p className="text-xs text-muted-foreground mb-1.5">あなたの診断プロフィール</p>
+        <p className="text-xs text-muted-foreground mb-1.5">
+          あなたの診断プロフィール
+        </p>
         <div className="flex flex-wrap gap-1.5">
           <Badge variant="secondary" className="text-xs">
             {SKIN_TYPE_LABEL[input.skinType]}
@@ -83,7 +85,8 @@ export function DiagnosisResult({ result, onRetry }: Props) {
                     <div className="flex flex-wrap gap-1 mb-2">
                       {product.spf > 0 && (
                         <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-secondary text-muted-foreground border border-border">
-                          SPF{product.spf}{product.pa ? ` / PA${product.pa}` : ""}
+                          SPF{product.spf}
+                          {product.pa ? ` / PA${product.pa}` : ""}
                         </span>
                       )}
                       {product.tags.slice(0, 3).map((tag) => (
@@ -157,7 +160,7 @@ export function DiagnosisResult({ result, onRetry }: Props) {
         診断をやり直す
       </button>
     </div>
-  )
+  );
 }
 
 // ─── アドバイスカード ────────────────────────────────────────────
@@ -165,8 +168,10 @@ export function DiagnosisResult({ result, onRetry }: Props) {
 function AdviceCard({ title, body }: { title: string; body: string }) {
   return (
     <div className="rounded-xl border border-border p-4">
-      <p className="text-xs font-medium text-muted-foreground mb-1.5">{title}</p>
+      <p className="text-xs font-medium text-muted-foreground mb-1.5">
+        {title}
+      </p>
       <p className="text-sm leading-relaxed text-foreground">{body}</p>
     </div>
-  )
+  );
 }

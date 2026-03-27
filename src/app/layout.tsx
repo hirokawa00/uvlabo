@@ -1,17 +1,17 @@
-import type { Metadata, Viewport } from "next"
-import { Noto_Sans_JP } from "next/font/google"
-import "./globals.css"
+import type { Metadata, Viewport } from "next";
+import { Noto_Sans_JP } from "next/font/google";
+import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"],
-  weight: ["400", "500"],     // 700を削除（約30%削減）
+  weight: ["400", "500"], // 700を削除（約30%削減）
   display: "swap",
   variable: "--font-noto",
-  adjustFontFallback: true,   // フォールバックのメトリクスを近似 → CLS改善
-  preload: false,             // 日本語フォントは巨大なため先読み不要
-})
+  adjustFontFallback: true, // フォールバックのメトリクスを近似 → CLS改善
+  preload: false, // 日本語フォントは巨大なため先読み不要
+});
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com"
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
@@ -22,8 +22,17 @@ export const metadata: Metadata = {
   description:
     "今日のUV指数を確認して、肌タイプ・シーン・予算に合った日焼け止めを診断。日焼けしてしまったときの事後ケア手順も分かる紫外線ケア特化サービスです。",
   keywords: [
-    "紫外線", "UV指数", "日焼け止め", "日焼け止め診断", "SPF", "PA",
-    "日焼けケア", "事後ケア", "シミ予防", "美白", "敏感肌",
+    "紫外線",
+    "UV指数",
+    "日焼け止め",
+    "日焼け止め診断",
+    "SPF",
+    "PA",
+    "日焼けケア",
+    "事後ケア",
+    "シミ予防",
+    "美白",
+    "敏感肌",
   ],
   authors: [{ name: "UVlabo" }],
   creator: "UVlabo",
@@ -66,7 +75,7 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
   },
-}
+};
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -76,12 +85,12 @@ export const viewport: Viewport = {
     { media: "(prefers-color-scheme: light)", color: "#ffffff" },
     { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
   ],
-}
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="ja" className={notoSansJP.variable}>
@@ -94,9 +103,7 @@ export default function RootLayout({
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
       </head>
-      <body className={`${notoSansJP.className} antialiased`}>
-        {children}
-      </body>
+      <body className={`${notoSansJP.className} antialiased`}>{children}</body>
     </html>
-  )
+  );
 }

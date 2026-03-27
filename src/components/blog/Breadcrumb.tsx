@@ -1,17 +1,17 @@
-import Link from "next/link"
-import { ChevronRight, Home } from "lucide-react"
+import { ChevronRight, Home } from "lucide-react";
+import Link from "next/link";
 
 export type BreadcrumbItem = {
-  label: string
-  href?: string
-}
+  label: string;
+  href?: string;
+};
 
 type Props = {
-  items: BreadcrumbItem[]
-}
+  items: BreadcrumbItem[];
+};
 
 export function Breadcrumb({ items }: Props) {
-  const allItems: BreadcrumbItem[] = [{ label: "ホーム", href: "/" }, ...items]
+  const allItems: BreadcrumbItem[] = [{ label: "ホーム", href: "/" }, ...items];
 
   // 構造化データ
   const jsonLd = {
@@ -25,14 +25,14 @@ export function Breadcrumb({ items }: Props) {
         ? `${process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlabo.com"}${item.href}`
         : undefined,
     })),
-  }
+  };
 
   return (
     <>
       <nav aria-label="パンくずリスト">
         <ol className="flex items-center gap-1 text-xs text-muted-foreground overflow-x-auto whitespace-nowrap pb-0.5">
           {allItems.map((item, i) => {
-            const isLast = i === allItems.length - 1
+            const isLast = i === allItems.length - 1;
             return (
               <li key={i} className="flex items-center gap-1 shrink-0">
                 {i === 0 && <Home className="w-3 h-3 shrink-0" />}
@@ -45,15 +45,21 @@ export function Breadcrumb({ items }: Props) {
                   </Link>
                 ) : (
                   <span
-                    className={isLast ? "text-foreground font-medium truncate max-w-[180px]" : ""}
+                    className={
+                      isLast
+                        ? "text-foreground font-medium truncate max-w-[180px]"
+                        : ""
+                    }
                     aria-current={isLast ? "page" : undefined}
                   >
                     {item.label}
                   </span>
                 )}
-                {!isLast && <ChevronRight className="w-3 h-3 shrink-0 text-muted-foreground/50" />}
+                {!isLast && (
+                  <ChevronRight className="w-3 h-3 shrink-0 text-muted-foreground/50" />
+                )}
               </li>
-            )
+            );
           })}
         </ol>
       </nav>
@@ -63,5 +69,5 @@ export function Breadcrumb({ items }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
     </>
-  )
+  );
 }

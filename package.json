@@ -23,7 +23,7 @@
     "deploy": "npx @opennextjs/cloudflare build && npx @opennextjs/cloudflare deploy",
     "preview:cf": "npx @opennextjs/cloudflare build && wrangler dev",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "biome format --write ."
   },
   "dependencies": {
     "@hono/zod-validator": "^0.7.6",

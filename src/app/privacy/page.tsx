@@ -1,20 +1,24 @@
-import type { Metadata } from "next"
-import Link from "next/link"
+import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
-  description: "UVlaboのプライバシーポリシーです。位置情報の取得・利用方法についてご確認ください。",
+  description:
+    "UVlaboのプライバシーポリシーです。位置情報の取得・利用方法についてご確認ください。",
   robots: { index: true, follow: false },
-}
+};
 
-const LAST_UPDATED = "2025年5月1日"
+const LAST_UPDATED = "2025年5月1日";
 
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
         <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
-          <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+          <Link
+            href="/"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
             ← トップに戻る
           </Link>
           <span className="text-muted-foreground/40">|</span>
@@ -26,10 +30,11 @@ export default function PrivacyPage() {
 
       <main className="max-w-2xl mx-auto px-4 py-10">
         <h1 className="text-2xl font-medium mb-1.5">プライバシーポリシー</h1>
-        <p className="text-sm text-muted-foreground mb-10">最終更新日：{LAST_UPDATED}</p>
+        <p className="text-sm text-muted-foreground mb-10">
+          最終更新日：{LAST_UPDATED}
+        </p>
 
         <div className="space-y-10 text-sm leading-relaxed">
-
           <section>
             <h2 className="text-base font-medium mb-3">1. はじめに</h2>
             <p className="text-muted-foreground">
@@ -43,15 +48,20 @@ export default function PrivacyPage() {
             <h2 className="text-base font-medium mb-3">2. 取得する情報</h2>
             <div className="space-y-4 text-muted-foreground">
               <div className="p-4 rounded-xl bg-secondary/50 border border-border">
-                <p className="font-medium text-foreground mb-1.5">位置情報（緯度・経度）</p>
+                <p className="font-medium text-foreground mb-1.5">
+                  位置情報（緯度・経度）
+                </p>
                 <p>
-                  UV指数の取得・表示のためにブラウザのGeolocation APIを使用します。
+                  UV指数の取得・表示のためにブラウザのGeolocation
+                  APIを使用します。
                   位置情報の取得には事前に許可を求め、取得した情報はサーバーに
                   保存されません。UV指数の取得のみに使用し、処理後は破棄されます。
                 </p>
               </div>
               <div className="p-4 rounded-xl bg-secondary/50 border border-border">
-                <p className="font-medium text-foreground mb-1.5">診断入力情報</p>
+                <p className="font-medium text-foreground mb-1.5">
+                  診断入力情報
+                </p>
                 <p>
                   日焼け止め診断・事後ケアガイドで入力いただく肌タイプ・シーン・
                   予算等の情報は、ブラウザ上での結果表示のみに使用します。
@@ -59,7 +69,9 @@ export default function PrivacyPage() {
                 </p>
               </div>
               <div className="p-4 rounded-xl bg-secondary/50 border border-border">
-                <p className="font-medium text-foreground mb-1.5">アクセス解析情報</p>
+                <p className="font-medium text-foreground mb-1.5">
+                  アクセス解析情報
+                </p>
                 <p>
                   サービス改善のためGoogle Analytics 4を使用する場合があります。
                   収集されるデータはIPアドレス・ページビュー・利用デバイス等の
@@ -80,7 +92,9 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="text-base font-medium mb-3">4. アフィリエイトについて</h2>
+            <h2 className="text-base font-medium mb-3">
+              4. アフィリエイトについて
+            </h2>
             <p className="text-muted-foreground">
               当サービスはAmazonアソシエイト・A8.net等のアフィリエイトプログラムに
               参加しています。製品リンクを経由してご購入いただいた場合、
@@ -119,15 +133,26 @@ export default function PrivacyPage() {
               ご連絡ください。
             </p>
           </section>
-
         </div>
 
         <div className="mt-12 pt-6 border-t border-border flex gap-4 text-xs text-muted-foreground">
-          <Link href="/terms" className="hover:text-foreground transition-colors">利用規約</Link>
-          <Link href="/legal" className="hover:text-foreground transition-colors">特定商取引法に基づく表記</Link>
-          <Link href="/" className="hover:text-foreground transition-colors">トップ</Link>
+          <Link
+            href="/terms"
+            className="hover:text-foreground transition-colors"
+          >
+            利用規約
+          </Link>
+          <Link
+            href="/legal"
+            className="hover:text-foreground transition-colors"
+          >
+            特定商取引法に基づく表記
+          </Link>
+          <Link href="/" className="hover:text-foreground transition-colors">
+            トップ
+          </Link>
         </div>
       </main>
     </div>
-  )
+  );
 }

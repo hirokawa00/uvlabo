@@ -1,32 +1,32 @@
-"use client"
+"use client";
 
-import { useState, useCallback } from "react"
+import { useCallback, useState } from "react";
+import { runDiagnosis } from "@/lib/diagnosis/engine";
 import type {
+  BudgetRange,
   DiagnosisInput,
   DiagnosisStep,
-  SkinType,
-  UseScene,
   MakeupStyle,
-  BudgetRange,
+  SkinType,
   TexturePreference,
-} from "@/lib/diagnosis/types"
-import { runDiagnosis } from "@/lib/diagnosis/engine"
-import { StepBar, Step1, Step2, Step3, Step4, Step5 } from "./DiagnosisSteps"
-import { DiagnosisResult } from "./DiagnosisResult"
+  UseScene,
+} from "@/lib/diagnosis/types";
+import { DiagnosisResult } from "./DiagnosisResult";
+import { Step1, Step2, Step3, Step4, Step5, StepBar } from "./DiagnosisSteps";
 
 type Props = {
   /** UVCardから受け取るUV指数（任意） */
-  uvIndex?: number
-}
+  uvIndex?: number;
+};
 
 type State = {
-  step: DiagnosisStep | "result" | "start"
-  skinType: SkinType | null
-  scene: UseScene | null
-  makeupStyle: MakeupStyle | null
-  budget: BudgetRange | null
-  texture: TexturePreference | null
-}
+  step: DiagnosisStep | "result" | "start";
+  skinType: SkinType | null;
+  scene: UseScene | null;
+  makeupStyle: MakeupStyle | null;
+  budget: BudgetRange | null;
+  texture: TexturePreference | null;
+};
 
 const INITIAL_STATE: State = {
   step: "start",
@@ -35,24 +35,27 @@ const INITIAL_STATE: State = {
   makeupStyle: null,
   budget: null,
   texture: null,
-}
+};
 
 export function DiagnosisContainer({ uvIndex }: Props) {
-  const [state, setState] = useState<State>(INITIAL_STATE)
+  const [state, setState] = useState<State>(INITIAL_STATE);
 
-  const update = useCallback(<K extends keyof State>(key: K, value: State[K]) => {
-    setState((prev) => ({ ...prev, [key]: value }))
-  }, [])
+  const update = useCallback(
+    <K extends keyof State>(key: K, value: State[K]) => {
+      setState((prev) => ({ ...prev, [key]: value }));
+    },
+    [],
+  );
 
   const goTo = useCallback((step: State["step"]) => {
-    setState((prev) => ({ ...prev, step }))
+    setState((prev) => ({ ...prev, step }));
     // スクロールをトップに戻す（モバイル対応）
-    window.scrollTo({ top: 0, behavior: "smooth" })
-  }, [])
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   const handleRetry = useCallback(() => {
-    setState(INITIAL_STATE)
-  }, [])
+    setState(INITIAL_STATE);
+  }, []);
 
   // ─── 開始画面 ─────────────────────────────────────────────────
   if (state.step === "start") {
@@ -62,7 +65,8 @@ export function DiagnosisContainer({ uvIndex }: Props) {
           <p className="text-3xl mb-3">🌞</p>
           <h2 className="text-lg font-medium mb-1.5">今日の日焼け止めを診断</h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            5つの質問に答えるだけで<br />
+            5つの質問に答えるだけで
+            <br />
             あなたに最適な日焼け止めが分かります
           </p>
         </div>
@@ -75,11 +79,13 @@ export function DiagnosisContainer({ uvIndex }: Props) {
         </button>
         {uvIndex !== undefined && (
           <p className="text-center text-xs text-muted-foreground">
-            今日のUV指数 <span className="font-medium text-foreground">{uvIndex}</span> をもとに最適化します
+            今日のUV指数{" "}
+            <span className="font-medium text-foreground">{uvIndex}</span>{" "}
+            をもとに最適化します
           </p>
         )}
       </div>
-    )
+    );
   }
 
   // ─── 結果画面 ─────────────────────────────────────────────────
@@ -92,8 +98,8 @@ export function DiagnosisContainer({ uvIndex }: Props) {
       !state.budget ||
       !state.texture
     ) {
-      setState(INITIAL_STATE)
-      return null
+      setState(INITIAL_STATE);
+      return null;
     }
 
     const input: DiagnosisInput = {
@@ -103,11 +109,11 @@ export function DiagnosisContainer({ uvIndex }: Props) {
       budget: state.budget,
       texture: state.texture,
       uvIndex,
-    }
+    };
 
-    const result = runDiagnosis(input)
+    const result = runDiagnosis(input);
 
-    return <DiagnosisResult result={result} onRetry={handleRetry} />
+    return <DiagnosisResult result={result} onRetry={handleRetry} />;
   }
 
   // ─── ステップ画面 ─────────────────────────────────────────────
@@ -159,5 +165,5 @@ export function DiagnosisContainer({ uvIndex }: Props) {
         />
       )}
     </div>
-  )
+  );
 }

@@ -1,46 +1,78 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import type { AfterCareGuide, CarePhase, CareStep } from "@/lib/aftercare/types"
-import { BURN_LEVEL_LABEL, AREA_LABEL } from "@/lib/aftercare/types"
-import { Card, CardContent } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ExternalLink, RefreshCw, ChevronDown, ChevronUp, AlertTriangle } from "lucide-react"
-import { cn } from "@/lib/utils"
+import {
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  RefreshCw,
+} from "lucide-react";
+import { useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
+import type {
+  AfterCareGuide,
+  CarePhase,
+  CareStep,
+} from "@/lib/aftercare/types";
+import { AREA_LABEL, BURN_LEVEL_LABEL } from "@/lib/aftercare/types";
+import { cn } from "@/lib/utils";
 
 type Props = {
-  guide: AfterCareGuide
-  onRetry: () => void
-}
+  guide: AfterCareGuide;
+  onRetry: () => void;
+};
 
-const PHASE_COLOR: Record<CarePhase, { bg: string; text: string; border: string; badge: string }> = {
-  tonight:    { bg: "bg-orange-50",  text: "text-orange-800", border: "border-orange-200", badge: "bg-orange-100 text-orange-800" },
-  day1_3:     { bg: "bg-amber-50",   text: "text-amber-800",  border: "border-amber-200",  badge: "bg-amber-100 text-amber-800"  },
-  day4_plus:  { bg: "bg-emerald-50", text: "text-emerald-800",border: "border-emerald-200",badge: "bg-emerald-100 text-emerald-800" },
-}
+const PHASE_COLOR: Record<
+  CarePhase,
+  { bg: string; text: string; border: string; badge: string }
+> = {
+  tonight: {
+    bg: "bg-orange-50",
+    text: "text-orange-800",
+    border: "border-orange-200",
+    badge: "bg-orange-100 text-orange-800",
+  },
+  day1_3: {
+    bg: "bg-amber-50",
+    text: "text-amber-800",
+    border: "border-amber-200",
+    badge: "bg-amber-100 text-amber-800",
+  },
+  day4_plus: {
+    bg: "bg-emerald-50",
+    text: "text-emerald-800",
+    border: "border-emerald-200",
+    badge: "bg-emerald-100 text-emerald-800",
+  },
+};
 
 const PHASE_ICON: Record<CarePhase, string> = {
-  tonight:   "🌙",
-  day1_3:    "🌤️",
+  tonight: "🌙",
+  day1_3: "🌤️",
   day4_plus: "✨",
-}
+};
 
 export function AfterCareGuideResult({ guide, onRetry }: Props) {
-  const [openPhase, setOpenPhase] = useState<CarePhase>("tonight")
+  const [openPhase, setOpenPhase] = useState<CarePhase>("tonight");
 
   return (
     <div className="space-y-4">
       {/* 緊急度メッセージ */}
-      <div className={cn(
-        "rounded-xl px-4 py-3.5 border",
-        guide.shouldSeeDoctor
-          ? "bg-red-50 border-red-200"
-          : "bg-orange-50 border-orange-200"
-      )}>
-        <p className={cn(
-          "text-sm leading-relaxed",
-          guide.shouldSeeDoctor ? "text-red-800" : "text-orange-900"
-        )}>
+      <div
+        className={cn(
+          "rounded-xl px-4 py-3.5 border",
+          guide.shouldSeeDoctor
+            ? "bg-red-50 border-red-200"
+            : "bg-orange-50 border-orange-200",
+        )}
+      >
+        <p
+          className={cn(
+            "text-sm leading-relaxed",
+            guide.shouldSeeDoctor ? "text-red-800" : "text-orange-900",
+          )}
+        >
           {guide.urgencyMessage}
         </p>
       </div>
@@ -62,7 +94,9 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
         <div className="flex items-start gap-3 p-4 rounded-xl bg-red-50 border border-red-200">
           <AlertTriangle className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
           <div>
-            <p className="text-sm font-medium text-red-800 mb-0.5">皮膚科への受診を推奨します</p>
+            <p className="text-sm font-medium text-red-800 mb-0.5">
+              皮膚科への受診を推奨します
+            </p>
             <p className="text-xs text-red-700 leading-relaxed">
               重度の日焼けや水ぶくれがある場合は、自己処置より先に皮膚科を受診してください。
               適切な処置で回復を早めることができます。
@@ -78,33 +112,49 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
         </p>
         <div className="space-y-2">
           {guide.phases.map(({ phase, label, steps }) => {
-            const color = PHASE_COLOR[phase]
-            const isOpen = openPhase === phase
+            const color = PHASE_COLOR[phase];
+            const isOpen = openPhase === phase;
             return (
-              <div key={phase} className={cn("rounded-xl border overflow-hidden", color.border)}>
+              <div
+                key={phase}
+                className={cn(
+                  "rounded-xl border overflow-hidden",
+                  color.border,
+                )}
+              >
                 {/* アコーディオンヘッダー */}
                 <button
                   type="button"
                   onClick={() => setOpenPhase(isOpen ? phase : phase)}
                   className={cn(
                     "w-full flex items-center gap-3 px-4 py-3.5 text-left",
-                    isOpen ? color.bg : "bg-card hover:bg-secondary/50"
+                    isOpen ? color.bg : "bg-card hover:bg-secondary/50",
                   )}
                 >
-                  <span className="text-lg leading-none">{PHASE_ICON[phase]}</span>
-                  <span className={cn(
-                    "text-sm font-medium flex-1",
-                    isOpen ? color.text : "text-foreground"
-                  )}>
+                  <span className="text-lg leading-none">
+                    {PHASE_ICON[phase]}
+                  </span>
+                  <span
+                    className={cn(
+                      "text-sm font-medium flex-1",
+                      isOpen ? color.text : "text-foreground",
+                    )}
+                  >
                     {label}
                   </span>
-                  <span className={cn("text-xs px-2 py-0.5 rounded-full", color.badge)}>
+                  <span
+                    className={cn(
+                      "text-xs px-2 py-0.5 rounded-full",
+                      color.badge,
+                    )}
+                  >
                     {steps.length}ステップ
                   </span>
-                  {isOpen
-                    ? <ChevronUp className="w-4 h-4 text-muted-foreground" />
-                    : <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                  }
+                  {isOpen ? (
+                    <ChevronUp className="w-4 h-4 text-muted-foreground" />
+                  ) : (
+                    <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                  )}
                 </button>
 
                 {/* ステップ一覧 */}
@@ -116,13 +166,19 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
                         step={step}
                         index={idx}
                         total={steps.length}
-                        accentColor={phase === "tonight" ? "orange" : phase === "day1_3" ? "amber" : "emerald"}
+                        accentColor={
+                          phase === "tonight"
+                            ? "orange"
+                            : phase === "day1_3"
+                              ? "amber"
+                              : "emerald"
+                        }
                       />
                     ))}
                   </div>
                 )}
               </div>
-            )
+            );
           })}
         </div>
       </div>
@@ -135,7 +191,10 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
           </p>
           <ul className="space-y-1.5">
             {guide.avoidList.map((item, i) => (
-              <li key={i} className="flex items-start gap-2 text-xs text-foreground">
+              <li
+                key={i}
+                className="flex items-start gap-2 text-xs text-foreground"
+              >
                 <span className="text-red-400 mt-0.5 shrink-0">✕</span>
                 {item}
               </li>
@@ -159,12 +218,18 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
                 {product.emoji}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-[10px] text-muted-foreground mb-0.5">{product.useCase}</p>
-                <p className="text-sm font-medium leading-tight truncate">{product.name}</p>
+                <p className="text-[10px] text-muted-foreground mb-0.5">
+                  {product.useCase}
+                </p>
+                <p className="text-sm font-medium leading-tight truncate">
+                  {product.name}
+                </p>
                 <p className="text-xs text-muted-foreground">{product.brand}</p>
               </div>
               <div className="flex flex-col items-end gap-1.5 shrink-0">
-                <span className="text-sm font-medium">¥{product.price.toLocaleString()}</span>
+                <span className="text-sm font-medium">
+                  ¥{product.price.toLocaleString()}
+                </span>
                 <a
                   href={product.affiliateUrl}
                   target="_blank"
@@ -181,7 +246,8 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
 
       {/* アフィリエイト表記 */}
       <p className="text-[10px] text-muted-foreground">
-        ※ 本ページにはアフィリエイトリンクが含まれています。医療的な判断は必ず専門家にご相談ください。
+        ※
+        本ページにはアフィリエイトリンクが含まれています。医療的な判断は必ず専門家にご相談ください。
       </p>
 
       {/* やり直し */}
@@ -194,32 +260,32 @@ export function AfterCareGuideResult({ guide, onRetry }: Props) {
         もう一度最初から
       </button>
     </div>
-  )
+  );
 }
 
 // ─── ケアステップ1行 ─────────────────────────────────────────────
 
 type CareStepRowProps = {
-  step: CareStep
-  index: number
-  total: number
-  accentColor: "orange" | "amber" | "emerald"
-}
+  step: CareStep;
+  index: number;
+  total: number;
+  accentColor: "orange" | "amber" | "emerald";
+};
 
 function CareStepRow({ step, index, total, accentColor }: CareStepRowProps) {
-  const [expanded, setExpanded] = useState(index === 0)
+  const [expanded, setExpanded] = useState(index === 0);
 
   const lineColor = {
-    orange:  "bg-orange-300",
-    amber:   "bg-amber-300",
+    orange: "bg-orange-300",
+    amber: "bg-amber-300",
     emerald: "bg-emerald-400",
-  }[accentColor]
+  }[accentColor];
 
   const numColor = {
-    orange:  "bg-orange-500 text-white",
-    amber:   "bg-amber-500 text-white",
+    orange: "bg-orange-500 text-white",
+    amber: "bg-amber-500 text-white",
     emerald: "bg-emerald-600 text-white",
-  }[accentColor]
+  }[accentColor];
 
   return (
     <div className="px-4 py-3 border-b border-border/50 last:border-0">
@@ -230,7 +296,12 @@ function CareStepRow({ step, index, total, accentColor }: CareStepRowProps) {
       >
         {/* ステップ番号 + 縦線 */}
         <div className="flex flex-col items-center shrink-0">
-          <div className={cn("w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-medium", numColor)}>
+          <div
+            className={cn(
+              "w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-medium",
+              numColor,
+            )}
+          >
             {step.order}
           </div>
           {index < total - 1 && (
@@ -243,12 +314,15 @@ function CareStepRow({ step, index, total, accentColor }: CareStepRowProps) {
             <p className="text-sm font-medium leading-tight">{step.title}</p>
             <div className="flex items-center gap-1.5 shrink-0">
               {step.duration && (
-                <span className="text-[10px] text-muted-foreground">{step.duration}</span>
+                <span className="text-[10px] text-muted-foreground">
+                  {step.duration}
+                </span>
               )}
-              {expanded
-                ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" />
-                : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
-              }
+              {expanded ? (
+                <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" />
+              ) : (
+                <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />
+              )}
             </div>
           </div>
         </div>
@@ -257,7 +331,9 @@ function CareStepRow({ step, index, total, accentColor }: CareStepRowProps) {
       {/* 展開コンテンツ */}
       {expanded && (
         <div className="mt-2 ml-9 space-y-2">
-          <p className="text-xs text-muted-foreground leading-relaxed">{step.detail}</p>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {step.detail}
+          </p>
           {step.caution && (
             <div className="flex items-start gap-1.5 p-2 rounded-lg bg-amber-50 border border-amber-100">
               <span className="text-amber-500 text-xs shrink-0 mt-0.5">⚠</span>
@@ -267,5 +343,5 @@ function CareStepRow({ step, index, total, accentColor }: CareStepRowProps) {
         </div>
       )}
     </div>
-  )
+  );
 }

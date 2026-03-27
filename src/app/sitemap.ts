@@ -1,6 +1,6 @@
-import type { MetadataRoute } from "next"
+import type { MetadataRoute } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlab.jp"
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "https://uvlab.jp";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -28,5 +28,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.3,
     },
-  ]
+  ];
 }

@@ -1,4 +1,4 @@
-import type { OfficeEntry } from "./types"
+import type { OfficeEntry } from "./types";
 
 // 各都道府県の代表座標と気象庁オフィスコード
 // 出典: 気象庁 area.json より抽出
@@ -60,31 +60,33 @@ export const JMA_OFFICES: OfficeEntry[] = [
   { code: "472000", name: "大東島地方", lat: 25.8, lng: 131.2 },
   { code: "473000", name: "宮古島地方", lat: 24.8, lng: 125.3 },
   { code: "474000", name: "八重山地方", lat: 24.4, lng: 124.2 },
-]
+];
 
 /**
  * 緯度経度からハversine距離で最近傍の気象庁オフィスコードを返す
  */
 export function findNearestOffice(lat: number, lng: number): OfficeEntry {
-  let nearest = JMA_OFFICES[0]
-  let minDist = Infinity
+  let nearest = JMA_OFFICES[0];
+  let minDist = Infinity;
 
   for (const office of JMA_OFFICES) {
-    const dLat = toRad(lat - office.lat)
-    const dLng = toRad(lng - office.lng)
+    const dLat = toRad(lat - office.lat);
+    const dLng = toRad(lng - office.lng);
     const a =
       Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRad(lat)) * Math.cos(toRad(office.lat)) * Math.sin(dLng / 2) ** 2
-    const dist = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+      Math.cos(toRad(lat)) *
+        Math.cos(toRad(office.lat)) *
+        Math.sin(dLng / 2) ** 2;
+    const dist = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     if (dist < minDist) {
-      minDist = dist
-      nearest = office
+      minDist = dist;
+      nearest = office;
     }
   }
 
-  return nearest
+  return nearest;
 }
 
 function toRad(deg: number): number {
-  return (deg * Math.PI) / 180
+  return (deg * Math.PI) / 180;
 }

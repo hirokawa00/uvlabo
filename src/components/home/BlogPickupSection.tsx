@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { BLOG_POSTS, CATEGORY_CONFIG } from "@/lib/blog"
-import { Clock, ChevronRight, BookOpen } from "lucide-react"
+import { BookOpen, ChevronRight, Clock } from "lucide-react";
+import Link from "next/link";
+import { BLOG_POSTS, CATEGORY_CONFIG } from "@/lib/blog";
 
-const PICKUP_POSTS = BLOG_POSTS.slice(0, 3)
+const PICKUP_POSTS = BLOG_POSTS.slice(0, 3);
 
 export function BlogPickupSection() {
   return (
@@ -24,7 +24,7 @@ export function BlogPickupSection() {
 
       <div className="space-y-2.5">
         {PICKUP_POSTS.map((post) => {
-          const cfg = CATEGORY_CONFIG[post.category]
+          const cfg = CATEGORY_CONFIG[post.category];
 
           return (
             <Link
@@ -57,7 +57,7 @@ export function BlogPickupSection() {
 
               <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
             </Link>
-          )
+          );
         })}
       </div>
 
@@ -69,5 +69,5 @@ export function BlogPickupSection() {
         コラムをもっと読む
       </Link>
     </div>
-  )
+  );
 }

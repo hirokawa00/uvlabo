@@ -1,4 +1,4 @@
-import type { Product } from "./types"
+import type { Product } from "./types";
 
 /**
  * 製品データベース
@@ -21,7 +21,13 @@ export const PRODUCTS: Product[] = [
     price: 2860,
     spf: 50,
     pa: "++++",
-    tags: ["ノンケミカル", "下地兼用", "石けんオフ", "白浮きしにくい", "SPF50+"],
+    tags: [
+      "ノンケミカル",
+      "下地兼用",
+      "石けんオフ",
+      "白浮きしにくい",
+      "SPF50+",
+    ],
     description: "ミネラルだけで作ったUV下地。毛穴カバーも叶える",
     emoji: "🌿",
     affiliate: [
@@ -198,4 +204,4 @@ export const PRODUCTS: Product[] = [
       textures: ["moist", "any"],
     },
   },
-]
+];

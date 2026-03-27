@@ -1,17 +1,17 @@
-"use client"
+"use client";
 
-import { useEffect } from "react"
+import { useEffect } from "react";
 
 type Props = {
-  error: Error & { digest?: string }
-  reset: () => void
-}
+  error: Error & { digest?: string };
+  reset: () => void;
+};
 
 export default function Error({ error, reset }: Props) {
   useEffect(() => {
     // エラーログ（本番では Sentry 等に送信）
-    console.error("App Error:", error)
-  }, [error])
+    console.error("App Error:", error);
+  }, [error]);
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
@@ -19,7 +19,8 @@ export default function Error({ error, reset }: Props) {
         <p className="text-5xl mb-5">⛅</p>
         <h2 className="text-xl font-medium mb-2">データの取得に失敗しました</h2>
         <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
-          気象庁APIへの接続に問題が発生しました。<br />
+          気象庁APIへの接続に問題が発生しました。
+          <br />
           しばらく待ってから再度お試しください。
         </p>
         <div className="flex flex-col gap-2.5">
@@ -39,5 +40,5 @@ export default function Error({ error, reset }: Props) {
         </div>
       </div>
     </div>
-  )
+  );
 }

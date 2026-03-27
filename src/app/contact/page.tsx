@@ -1,63 +1,69 @@
-"use client"
+"use client";
 
-import type { Metadata } from "next"
-import Link from "next/link"
-import { useState } from "react"
-import { Send, CheckCircle, AlertCircle, ChevronDown } from "lucide-react"
+import { AlertCircle, CheckCircle, ChevronDown, Send } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { useState } from "react";
 
 // ── メタデータは別ファイル（server component）で定義が必要なため
 // layout.tsxまたはcontact/layout.tsxで設定してください
 // export const metadata: Metadata = { title: "お問い合わせ" }
 
-type FormState = "idle" | "sending" | "success" | "error"
+type FormState = "idle" | "sending" | "success" | "error";
 
 type Category = {
-  value: string
-  label: string
-}
+  value: string;
+  label: string;
+};
 
 const CATEGORIES: Category[] = [
-  { value: "service",     label: "サービスについて" },
-  { value: "bug",         label: "不具合・エラーの報告" },
+  { value: "service", label: "サービスについて" },
+  { value: "bug", label: "不具合・エラーの報告" },
   { value: "affiliation", label: "アフィリエイト・広告について" },
-  { value: "content",     label: "コンテンツの誤りについて" },
-  { value: "other",       label: "その他" },
-]
+  { value: "content", label: "コンテンツの誤りについて" },
+  { value: "other", label: "その他" },
+];
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState<FormState>("idle")
-  const [errorMessage, setErrorMessage] = useState("")
+  const [formState, setFormState] = useState<FormState>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const [name, setName]       = useState("")
-  const [email, setEmail]     = useState("")
-  const [category, setCategory] = useState("")
-  const [message, setMessage] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [category, setCategory] = useState("");
+  const [message, setMessage] = useState("");
 
-  const isValid = name.trim() && email.includes("@") && category && message.trim().length >= 10
+  const isValid =
+    name.trim() &&
+    email.includes("@") &&
+    category &&
+    message.trim().length >= 10;
 
   const handleSubmit = async () => {
-    if (!isValid) return
-    setFormState("sending")
-    setErrorMessage("")
+    if (!isValid) return;
+    setFormState("sending");
+    setErrorMessage("");
 
     try {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, category, message }),
-      })
+      });
 
       if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error((data as { error?: string }).error ?? "送信に失敗しました")
+        const data = await res.json().catch(() => ({}));
+        throw new Error(
+          (data as { error?: string }).error ?? "送信に失敗しました",
+        );
       }
 
-      setFormState("success")
+      setFormState("success");
     } catch (e) {
-      setErrorMessage(e instanceof Error ? e.message : "送信に失敗しました")
-      setFormState("error")
+      setErrorMessage(e instanceof Error ? e.message : "送信に失敗しました");
+      setFormState("error");
     }
-  }
+  };
 
   // ── 送信完了画面 ───────────────────────────────────────────────
   if (formState === "success") {
@@ -71,7 +77,8 @@ export default function ContactPage() {
             </div>
             <h2 className="text-xl font-medium mb-2">送信しました</h2>
             <p className="text-sm text-muted-foreground leading-relaxed mb-8">
-              お問い合わせありがとうございます。<br />
+              お問い合わせありがとうございます。
+              <br />
               内容を確認の上、3営業日以内にご返信いたします。
             </p>
             <Link
@@ -84,7 +91,7 @@ export default function ContactPage() {
         </main>
         <Footer />
       </div>
-    )
+    );
   }
 
   // ── フォーム画面 ───────────────────────────────────────────────
@@ -96,7 +103,8 @@ export default function ContactPage() {
         <div className="mb-8">
           <h1 className="text-2xl font-medium mb-1.5">お問い合わせ</h1>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            ご質問・ご要望・不具合の報告などお気軽にどうぞ。<br />
+            ご質問・ご要望・不具合の報告などお気軽にどうぞ。
+            <br />
             通常3営業日以内にご返信いたします。
           </p>
         </div>
@@ -106,7 +114,9 @@ export default function ContactPage() {
           <div className="space-y-1.5">
             <label className="text-sm font-medium flex items-center gap-1">
               お名前
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">必須</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">
+                必須
+              </span>
             </label>
             <input
               type="text"
@@ -122,7 +132,9 @@ export default function ContactPage() {
           <div className="space-y-1.5">
             <label className="text-sm font-medium flex items-center gap-1">
               メールアドレス
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">必須</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">
+                必須
+              </span>
             </label>
             <input
               type="email"
@@ -137,7 +149,9 @@ export default function ContactPage() {
           <div className="space-y-1.5">
             <label className="text-sm font-medium flex items-center gap-1">
               お問い合わせ種別
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">必須</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">
+                必須
+              </span>
             </label>
             <div className="relative">
               <select
@@ -147,7 +161,9 @@ export default function ContactPage() {
               >
                 <option value="">選択してください</option>
                 {CATEGORIES.map((c) => (
-                  <option key={c.value} value={c.value}>{c.label}</option>
+                  <option key={c.value} value={c.value}>
+                    {c.label}
+                  </option>
                 ))}
               </select>
               <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
@@ -158,7 +174,9 @@ export default function ContactPage() {
           <div className="space-y-1.5">
             <label className="text-sm font-medium flex items-center gap-1">
               お問い合わせ内容
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">必須</span>
+              <span className="text-[10px] px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700 font-medium">
+                必須
+              </span>
             </label>
             <textarea
               value={message}
@@ -177,7 +195,10 @@ export default function ContactPage() {
           <div className="p-4 rounded-xl bg-secondary/50 border border-border">
             <p className="text-xs text-muted-foreground leading-relaxed">
               送信することで
-              <Link href="/privacy" className="text-emerald-700 underline underline-offset-2 mx-0.5">
+              <Link
+                href="/privacy"
+                className="text-emerald-700 underline underline-offset-2 mx-0.5"
+              >
                 プライバシーポリシー
               </Link>
               に同意したものとみなします。
@@ -223,7 +244,7 @@ export default function ContactPage() {
 
       <Footer />
     </div>
-  )
+  );
 }
 
 // ── ヘッダー ──────────────────────────────────────────────────────
@@ -232,7 +253,10 @@ function Header() {
   return (
     <header className="border-b border-border">
       <div className="max-w-lg mx-auto px-4 py-3 flex items-center gap-3">
-        <Link href="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+        <Link
+          href="/"
+          className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
           ← トップに戻る
         </Link>
         <span className="text-muted-foreground/40">|</span>
@@ -241,7 +265,7 @@ function Header() {
         </Link>
       </div>
     </header>
-  )
+  );
 }
 
 // ── フッター ──────────────────────────────────────────────────────
@@ -251,11 +275,26 @@ function Footer() {
     <footer className="border-t border-border mt-8">
       <div className="max-w-lg mx-auto px-4 py-6">
         <div className="flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted-foreground">
-          <Link href="/privacy" className="hover:text-foreground transition-colors">プライバシーポリシー</Link>
-          <Link href="/terms" className="hover:text-foreground transition-colors">利用規約</Link>
-          <Link href="/legal" className="hover:text-foreground transition-colors">特定商取引法に基づく表記</Link>
+          <Link
+            href="/privacy"
+            className="hover:text-foreground transition-colors"
+          >
+            プライバシーポリシー
+          </Link>
+          <Link
+            href="/terms"
+            className="hover:text-foreground transition-colors"
+          >
+            利用規約
+          </Link>
+          <Link
+            href="/legal"
+            className="hover:text-foreground transition-colors"
+          >
+            特定商取引法に基づく表記
+          </Link>
         </div>
       </div>
     </footer>
-  )
+  );
 }
