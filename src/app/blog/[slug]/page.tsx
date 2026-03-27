@@ -17,13 +17,15 @@ import { Clock, Calendar } from "lucide-react"
 // ── MDXを静的にインポート（Webpackの静的解析に対応）─────────────
 import SPF30VsSPF50 from "@/content/blog/spf30-vs-spf50.mdx"
 import SensitiveSkinSunscreen from "@/content/blog/sensitive-skin-sunscreen-2025.mdx"
-// import SunburnAftercare from "@/content/blog/sunburn-aftercare-72hours.mdx"
+import PaValueExplained from "@/content/blog/pa-value-explained.mdx"
+import SunburnAftercare from "@/content/blog/sunburn-aftercare-72hours.mdx"
 // 新しい記事を追加するたびにここにimportを追加してください
 
 const MDX_MAP: Record<string, React.ComponentType> = {
   "spf30-vs-spf50":                SPF30VsSPF50,
   "sensitive-skin-sunscreen-2025": SensitiveSkinSunscreen,
-  // "sunburn-aftercare-72hours":  SunburnAftercare,
+  "sunburn-aftercare-72hours":  SunburnAftercare,
+  "pa-value-explained":  PaValueExplained,
 }
 
 // ─────────────────────────────────────────────────────────────────

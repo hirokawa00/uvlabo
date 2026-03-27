@@ -126,9 +126,82 @@ export function ToolCTA({ title, description, href, label }: {
         href={href}
         className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-emerald-700 text-white text-sm font-medium hover:bg-emerald-800 transition-colors"
       >
-        {label} →
+        {label}
       </Link>
     </div>
+  )
+}
+
+// ── CTAボタン（シンプル単体ボタン）──────────────────────────────
+/**
+ * 記事本文中のどこにでも差し込めるシンプルなCTAボタン。
+ *
+ * Props:
+ *   href     - リンク先（内部パス or 外部URL）
+ *   label    - ボタンのテキスト
+ *   variant  - "primary"（緑・塗り） | "secondary"（緑・枠線）
+ *              デフォルト: "primary"
+ *   size     - "md"（通常） | "lg"（大）
+ *              デフォルト: "md"
+ *   fullWidth - true で横幅100%
+ *              デフォルト: true
+ *   external  - true で target="_blank" rel="noopener noreferrer"
+ *              デフォルト: false（外部URLは自動判定も可）
+ *
+ * 使用例:
+ *   <CTAButton href="/?tab=diagnosis" label="無料で診断する →" />
+ *   <CTAButton href="/" label="UV指数を確認する" variant="secondary" />
+ *   <CTAButton href="https://..." label="外部サイト" external />
+ */
+type CTAButtonProps = {
+  href: string
+  label: string
+  variant?: "primary" | "secondary"
+  size?: "md" | "lg"
+  fullWidth?: boolean
+  external?: boolean
+}
+
+export function CTAButton({
+  href,
+  label,
+  variant = "primary",
+  size = "md",
+  fullWidth = true,
+  external = false,
+}: CTAButtonProps) {
+  // 外部URLの自動判定（明示指定がなくても http/https で始まれば外部扱い）
+  const isExternal = external || href.startsWith("http")
+
+  const baseClass = [
+    "not-prose my-6 inline-flex items-center justify-center",
+    "rounded-xl font-medium transition-all active:scale-[0.98]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/50",
+    fullWidth ? "w-full" : "",
+    size === "lg" ? "px-6 py-4 text-base" : "px-5 py-3.5 text-sm",
+    variant === "primary"
+      ? "bg-emerald-700 text-white hover:bg-emerald-800 shadow-sm"
+      : "border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50",
+  ]
+    .filter(Boolean)
+    .join(" ")
+
+  const externalProps = isExternal
+    ? { target: "_blank" as const, rel: "noopener noreferrer" }
+    : {}
+
+  if (isExternal) {
+    return (
+      <a href={href} className={baseClass} {...externalProps}>
+        {label}
+      </a>
+    )
+  }
+
+  return (
+    <Link href={href} className={baseClass}>
+      {label}
+    </Link>
   )
 }
 
@@ -141,6 +214,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     CheckList,
     CheckItem,
     ToolCTA,
+    CTAButton,
 
     h2: ({ className, children, id, ...props }) => (
       <h2
