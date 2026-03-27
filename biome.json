@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": [**]
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,

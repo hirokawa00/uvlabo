@@ -56,8 +56,15 @@ app.get("/uv", zValidator("query", uvQuerySchema), async (c) => {
   const area = timeSeries0.areas[0];
   const popArea = timeSeries1?.areas?.[0];
 
-  const now = new Date();
-  const month = now.getMonth() + 1;
+  // ── JST変換（Cloudflare WorkersはUTCで動作するため +9時間） ──
+  const nowUtc = new Date();
+  const jstOffset = 9 * 60 * 60 * 1000; // 9時間をミリ秒に
+  const nowJst = new Date(nowUtc.getTime() + jstOffset);
+
+  const month = nowJst.getUTCMonth() + 1; // JSTの月（1〜12）
+  const currentHour = nowJst.getUTCHours(); // JSTの時刻（0〜23）
+  // ──────────────────────────────────────────────────────────────
+
   const reportDatetime = forecastData[0].reportDatetime;
   const forecastHours = [6, 8, 10, 12, 14, 16, 18];
   const weatherCode = area.weatherCodes?.[0] ?? "200";
@@ -80,7 +87,6 @@ app.get("/uv", zValidator("query", uvQuerySchema), async (c) => {
     };
   });
 
-  const currentHour = now.getHours();
   const currentUV = estimateUVIndex(weatherCode, month, currentHour, lat);
   const peakEntry = hourlyForecast.reduce((a, b) =>
     a.uvIndex > b.uvIndex ? a : b,
@@ -107,8 +113,5 @@ app.get("/uv", zValidator("query", uvQuerySchema), async (c) => {
 // ─── GET /api/health ─────────────────────────────────────────────
 app.get("/health", (c) => c.json({ status: "ok" }));
 
-// ── Next.js App Router + Cloudflare Workers 両対応のエクスポート ──
-// hono/vercel や hono/cloudflare-workers の handle は使わず
-// app.fetch を直接渡す（どの環境でも動作する）
 export const GET = (req: Request) => app.fetch(req);
 export const POST = (req: Request) => app.fetch(req);
