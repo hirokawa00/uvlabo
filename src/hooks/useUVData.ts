@@ -87,19 +87,19 @@ export function uvIndexToColor(uv: number): {
   if (uv <= 2)
     return {
       text: "text-green-700",
-      bg: "bg-green-50",
+      bg: "bg-green-300",
       border: "border-green-300",
     };
   if (uv <= 5)
     return {
       text: "text-yellow-700",
-      bg: "bg-yellow-50",
+      bg: "bg-yellow-400",
       border: "border-yellow-300",
     };
   if (uv <= 7)
     return {
       text: "text-orange-600",
-      bg: "bg-orange-50",
+      bg: "bg-orange-400",
       border: "border-orange-300",
     };
   if (uv <= 10)

@@ -79,6 +79,51 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
   const { data } = state;
   const colors = uvIndexToColor(data.currentUV);
 
+  // 1. カテゴリーごとの設定をオブジェクト化
+  const UV_LEVEL_CONFIG = {
+    low: {
+      label: "弱い",
+      action: "安心して過ごせます",
+      items: ["日焼け止め"],
+      color: "text-emerald-600 bg-emerald-50",
+    },
+    moderate: {
+      label: "中程度",
+      action: "日陰を選んで歩こう",
+      items: ["日焼け止め", "日傘", "帽子"],
+      color: "text-yellow-600 bg-yellow-50",
+    },
+    high: {
+      label: "強い",
+      action: "長袖や日傘でガードを",
+      items: ["日焼け止め", "日傘", "帽子", "長袖"],
+      color: "text-orange-600 bg-orange-50",
+    },
+    veryHigh: {
+      label: "非常に強い",
+      action: "日中の外出は控えて",
+      items: ["日焼け止め", "日傘", "帽子", "長袖", "サングラス"],
+      color: "text-red-600 bg-red-50",
+    },
+    extreme: {
+      label: "極端に強い",
+      action: "日中の外出は控えて！",
+      items: ["日焼け止め", "日傘", "帽子", "長袖", "サングラス"],
+      color: "text-purple-600 bg-purple-50",
+    },
+  };
+
+  // 現在の数値から設定を抽出
+  const getLevelConfig = (uv: number) => {
+    if (uv <= 2) return UV_LEVEL_CONFIG.low;
+    if (uv <= 5) return UV_LEVEL_CONFIG.moderate;
+    if (uv <= 7) return UV_LEVEL_CONFIG.high;
+    if (uv <= 10) return UV_LEVEL_CONFIG.veryHigh;
+    return UV_LEVEL_CONFIG.extreme;
+  };
+
+  const config = getLevelConfig(data.currentUV);
+
   return (
     <div className="space-y-3">
       {/* メインUVカード */}
@@ -132,18 +177,37 @@ export function UVCard({ spf = 50, onUVLoaded }: Props) {
             </div>
           </div>
 
-          {/* アドバイスバッジ */}
-          <div className="flex flex-wrap gap-1.5 mb-4">
-            <Badge variant="outline" className="text-xs">
-              推奨SPF {data.spfRecommended}
-              {data.spfRecommended === 50 ? "+" : ""}
-            </Badge>
-            <Badge variant="outline" className="text-xs">
-              {data.reapplyIntervalMin}分ごとに塗り直し
-            </Badge>
-            <Badge variant="outline" className="text-xs">
-              明日のピーク {data.tomorrowPeakUV}
-            </Badge>
+          {/* 視覚的なUVスケール（1〜11+のどこにいるか） */}
+          <div className={`p-4 mb-2 ${config.color}`}>
+            <div className="flex justify-between items-start">
+              <div>
+                <h3 className="text-lg font-bold mb-1">{config.action}</h3>
+                <p className="text-xs opacity-80">
+                  推奨対策：{config.items.join("・")}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 推奨アクション（バッジ） */}
+          <div className="grid grid-cols-2 gap-2 mb-4">
+            <div className="flex flex-col p-2 bg-slate-50 rounded border border-slate-100">
+              <span className="text-[10px] text-muted-foreground text-center">
+                塗り直し目安
+              </span>
+              <span className="text-sm font-semibold text-center">
+                {data.reapplyIntervalMin}分おき
+              </span>
+            </div>
+            <div className="flex flex-col p-2 bg-slate-50 rounded border border-slate-100">
+              <span className="text-[10px] text-muted-foreground text-center">
+                推奨SPF
+              </span>
+              <span className="text-sm font-semibold text-center">
+                SPF {data.spfRecommended}
+                {data.spfRecommended >= 50 ? "+" : ""}
+              </span>
+            </div>
           </div>
 
           {/* 時間別予報バー */}
